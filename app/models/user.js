@@ -4,10 +4,10 @@ const Schema = new mongoose.Schema({
     first_name: {type: String},
     last_name: {type: String},
     username: {type: String},
-    phone: {type: String},
+    mobile: {type: String},
     email: {type: String},
     password: {type: String},
-    otp: {type: Object, default: {code: 0, expires: 0}},
+    otp: {type: Object, default: {code: 0, expiresIn: 0}},
     bills: {type: [], default: []},
     discount: {type: Number, default: 0},
     brithday: {type: String},
@@ -15,5 +15,5 @@ const Schema = new mongoose.Schema({
 });
 
 module.exports = {
-    UserModel: mongoose.model("user", Schema),
+    UserModel: mongoose.model("users", Schema),
 };

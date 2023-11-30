@@ -1,5 +1,5 @@
 const Application = require("./app/server");
 const DB_URL = "mongodb://127.0.0.1:27017/storeDB";
-// require("dotenv").config();
+require("dotenv").config();
 
-new Application(5000, DB_URL);
+new Application(process.env.APPLICATION_PORT, DB_URL);

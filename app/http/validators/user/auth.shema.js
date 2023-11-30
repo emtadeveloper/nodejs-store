@@ -1,11 +1,19 @@
 const Joi = require("@hapi/joi");
-
-const authShema = Joi.object({
-    // email: Joi.string().trim().lowercase().required().error(new Error("ایمیل وارد شده صحیح نمی باشد")),
-    // password: Joi.string().min(6).max(16).trim().required(new Error("پسورد وارد شده باید بین 6 الی 16 کاراکتر باشد")),
+const createHttpError = require("http-errors");
+const getOtpSchema = Joi.object({
     mobile: Joi.string()
         .length(11)
         .pattern(/^09[0-9]{9}$/)
-        .error(new Error("شماره موبایل وارد شده صحیح نمی باشد")),
+        .error(createHttpError.BadRequest("شماره موبایل وارد شده صحیح نمیباشد")),
 });
-module.exports = {authShema};
+const chackOtpSchema = Joi.object({
+    mobile: Joi.string()
+        .length(11)
+        .pattern(/^09[0-9]{9}$/)
+        .error(createHttpError.BadRequest("شماره موبایل وارد شده صحیح نمیباشد")),
+    code: Joi.string().min(4).max(6).error(createHttpError.BadRequest("کد ارسال شده صحیح نمیباشد")),
+});
+module.exports = {
+    getOtpSchema,
+    chackOtpSchema,
+};

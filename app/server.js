@@ -1,10 +1,14 @@
 const morgan = require("morgan");
 const {AllRoutes} = require("./router/router");
 const createError = require("http-errors");
-
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUI = require("swagger-ui-express");
+const cors = require("cors");
 module.exports = class Application {
+    //
     #express = require("express");
     #app = this.#express();
+    //
     constructor(PORT, DB_URL) {
         this.configApplication();
         this.configDatabase(DB_URL);
@@ -15,10 +19,52 @@ module.exports = class Application {
 
     configApplication() {
         const path = require("path");
+        this.#app.use(cors());
         this.#app.use(morgan("dev"));
         this.#app.use(this.#express.json());
         this.#app.use(this.#express.urlencoded({extended: true}));
         this.#app.use(this.#express.static(path.join(__dirname, "..", "public")));
+        this.#app.use(
+            "/api-doc",
+            swaggerUI.serve,
+            swaggerUI.setup(
+                swaggerJsDoc({
+                    swaggerDefinition: {
+                        openapi: "3.0.0",
+                        info: {
+                            title: "Boto Start Store",
+                            version: "2.0.0",
+                            description: "بزرگترین مرجع آموزش برنامه نویسی و فروش محصولات جذاب برای برنامه نویسان",
+                            contact: {
+                                name: "Erfan Yousefi",
+                                url: "https://freerealapi.com",
+                                email: "erfanyousefi.co@gmail.com",
+                            },
+                        },
+                        servers: [
+                            {
+                                url: "http://localhost:4000",
+                            },
+                            {
+                                url: "http://localhost:5000",
+                            },
+                        ],
+                        components: {
+                            securitySchemes: {
+                                BearerAuth: {
+                                    type: "http",
+                                    scheme: "bearer",
+                                    bearerFormat: "JWT",
+                                },
+                            },
+                        },
+                        security: [{BearerAuth: []}],
+                    },
+                    apis: ["./app/router/**/*.js"],
+                }),
+                {explorer: true},
+            ),
+        );
     }
 
     createServer(PORT) {
