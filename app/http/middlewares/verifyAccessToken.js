@@ -18,16 +18,4 @@ function VerifyAccessToken(req, res, next) {
     } else return next(createError.Unauthorized("وارد حساب کاربری خود شوید"));
 }
 
-function VerifyRefreshToken(req, res, next) {
-    return new Promise((resolve, reject) => {
-        JWT.verify(token, REFRESH_TOKEN_SECRET_KET, async () => {
-            if (err) reject(createError.Unauthorized("وارد حساب کاربری خود شوید"));
-            const {mobile} = payload || {};
-            const user = await UserModel.findOne({mobile}, {password: 0, token: 0, otp: 0});
-            if (!user) next(createError.Unauthorized("حساب کاربری یافت نشد"));
-            resolve(mobile);
-        });
-    });
-}
-
-module.exports = {VerifyAccessToken, VerifyRefreshToken};
+module.exports = {VerifyAccessToken};

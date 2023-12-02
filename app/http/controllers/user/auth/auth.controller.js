@@ -1,10 +1,9 @@
 const createHttpError = require("http-errors");
 const {chackOtpSchema, getOtpSchema} = require("../../../validators/user/auth.shema");
 const {UserModel} = require("../../../../models/user");
-const {numberRandomGenerator, SignAccessToken, SignRefreshToken} = require("../../../../utils/function");
+const {numberRandomGenerator, SignAccessToken, SignRefreshToken, VerifyRefreshToken} = require("../../../../utils/function");
 const {EXPIRE_IN, USER_ROLE} = require("../../../../utils/constans");
 const Controller = require("../../controller");
-const {VerifyRefreshToken} = require("../../../middlewares/verifyAccessToken");
 class UserAuthController extends Controller {
     //
     async getOtp(req, res, next) {
@@ -31,12 +30,15 @@ class UserAuthController extends Controller {
     async refreshToken(req, res, next) {
         try {
             const {refreshToken} = req.body;
+            console.log(refreshToken);
             const mobile = await VerifyRefreshToken(refreshToken);
+            console.log(mobile);
             const user = await UserModel.findOne({mobile});
-            console.log(user, "user");
+            console.log(user);
             const accessToken = await SignAccessToken(user._id);
+            console.log(user, accessToken);
             const newRefreshToken = await SignRefreshToken(user._id);
-            console.log(accessToken, newRefreshToken);
+            // console.log(accessToken, newRefreshToken);
             return res.json({data: {accessToken, refreshToken: newRefreshToken}});
         } catch (error) {
             next(error);
@@ -51,9 +53,12 @@ class UserAuthController extends Controller {
             if (!user) throw createHttpError.NotFound("کاربر یافت نشد");
             if (user?.otp?.code != code) throw createHttpError.Unauthorized("کد ارسال شده صحیح نمی باشد");
             const now = Date.now();
+            console.log(+user.otp.expireIn < now);
             if (+user.otp.expireIn < now) throw createHttpError.Unauthorized("کد شما منقضی شده است");
+
             const accessToken = await SignAccessToken(user._id);
             const refreshToken = await SignRefreshToken(user._id);
+            console.log(refreshToken, "refreshToken");
             return res.json({data: {accessToken, refreshToken}});
         } catch (error) {
             next(error);
