@@ -11,6 +11,7 @@ module.exports = class Application {
     //
     constructor(PORT, DB_URL) {
         this.configApplication();
+        this.initRedis();
         this.configDatabase(DB_URL);
         this.createServer(PORT);
         this.createRoutes();
@@ -94,6 +95,10 @@ module.exports = class Application {
             console.log("disconnected");
             process.exit(0);
         });
+    }
+
+    initRedis() {
+        require("./utils/init_redis");
     }
 
     errorHandler() {
