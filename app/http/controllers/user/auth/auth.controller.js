@@ -49,13 +49,13 @@ class UserAuthController extends Controller {
         try {
             await chackOtpSchema.validateAsync(req.body);
             const {mobile, code} = req.body;
+            console.log({mobile}, {code});
             const user = await UserModel.findOne({mobile});
             if (!user) throw createHttpError.NotFound("کاربر یافت نشد");
             if (user?.otp?.code != code) throw createHttpError.Unauthorized("کد ارسال شده صحیح نمی باشد");
             const now = Date.now();
             console.log(+user.otp.expireIn < now);
             if (+user.otp.expireIn < now) throw createHttpError.Unauthorized("کد شما منقضی شده است");
-
             const accessToken = await SignAccessToken(user._id);
             const refreshToken = await SignRefreshToken(user._id);
             console.log(refreshToken, "refreshToken");
