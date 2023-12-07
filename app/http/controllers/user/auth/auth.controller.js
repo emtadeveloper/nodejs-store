@@ -2,7 +2,7 @@ const createHttpError = require("http-errors");
 const {chackOtpSchema, getOtpSchema} = require("../../../validators/user/auth.shema");
 const {UserModel} = require("../../../../models/user");
 const {numberRandomGenerator, SignAccessToken, SignRefreshToken, VerifyRefreshToken} = require("../../../../utils/function");
-const {EXPIRE_IN, USER_ROLE} = require("../../../../utils/constans");
+const {ROLES} = require("../../../../utils/constans");
 const Controller = require("../../controller");
 class UserAuthController extends Controller {
     //
@@ -66,12 +66,12 @@ class UserAuthController extends Controller {
     }
 
     async saveUser(mobile, code) {
-        let otp = {code, expireIn: EXPIRE_IN};
+        let otp = {code, expireIn: new Date().getTime() + 1200000};
         const result = await this.checkExitsUser(mobile);
         if (result) {
             return await this.updateUser(mobile, {otp});
         }
-        return !!UserModel.create({mobile, otp, Roles: [USER_ROLE]});
+        return !!UserModel.create({mobile, otp, Roles: [ROLES.USER]});
     }
 
     async checkExitsUser(mobile) {
