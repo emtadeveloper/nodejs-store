@@ -3,6 +3,8 @@ const JWT = require("jsonwebtoken");
 const {UserModel} = require("../models/user");
 const {ACCESS_TOKEN_SECRET_KEY, REFRESH_TOKEN_SECRET_KET} = require("./constans");
 const redisClient = require("./init_redis");
+const fs = require("fs");
+const path = require("path");
 
 function numberRandomGenerator() {
     return Math.floor(Math.random() * 90000 + 10000);
@@ -49,4 +51,9 @@ function VerifyRefreshToken(token) {
     });
 }
 
-module.exports = {numberRandomGenerator, SignAccessToken, SignRefreshToken, VerifyRefreshToken};
+function deleteFileInPublic(fileAddress) {
+    const pathFile = path.join(__dirname, "..", "..", "public", fileAddress);
+    fs.unlinkSync(pathFile);
+}
+
+module.exports = {deleteFileInPublic ,numberRandomGenerator, SignAccessToken, SignRefreshToken, VerifyRefreshToken};

@@ -41,7 +41,7 @@ const router = require("express").Router();
  *         description: "The ID of the parent category"
  *       - in: formData
  *         name: image
- *         type: file
+ *         type : file
  *         required: true
  *         description: "Image file for the blog category"
  *     responses:
@@ -53,6 +53,18 @@ const router = require("express").Router();
 
 router.post("/add", AdminBlogController.createBlog);
 
+/**
+ * @swagger
+ * /admin/blogs:
+ *   post:
+ *     tags: [Blog(AdminPanel)]
+ *     summary: get all blogs
+ *     responses:
+ *       200:
+ *         description: success
+ */
+
+router.get("/", AdminBlogController.getListOfBlogs);
 module.exports = {
     BlogRouter: router,
 };
