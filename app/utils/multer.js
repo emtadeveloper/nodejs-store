@@ -27,7 +27,7 @@ const storage = multer.diskStorage({
     },
 });
 
-function fileName(req, file, cb) {
+function fileFilter(req, file, cb) {
     const ext = path.extname(file.originalname);
     const mimeTypes = [".jpg", ".jpeg ", ".png ", ".webp ", ".gif"];
     if (mimeTypes.includes(ext)) {
@@ -36,6 +36,6 @@ function fileName(req, file, cb) {
     return cb(createError("فرمت ارسال شده صحیح نمی باشد"));
 }
 
-const uploadFile = multer({storage});
+const uploadFile = multer({storage, fileFilter});
 
 module.exports = {uploadFile};
