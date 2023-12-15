@@ -13,6 +13,7 @@ function VerifyAccessToken(req, res, next) {
             const user = await UserModel.findOne({mobile}, {password: 0, token: 0, otp: 0});
             if (!user) next(createError.Unauthorized("حساب کاربری یافت نشد"));
             req.user = user;
+            console.log(req.user);
             return next();
         });
     } else return next(createError.Unauthorized("وارد حساب کاربری خود شوید"));

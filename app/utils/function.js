@@ -56,4 +56,4 @@ function deleteFileInPublic(fileAddress) {
     fs.unlinkSync(pathFile);
 }
 
-module.exports = {deleteFileInPublic ,numberRandomGenerator, SignAccessToken, SignRefreshToken, VerifyRefreshToken};
+module.exports = {deleteFileInPublic, numberRandomGenerator, SignAccessToken, SignRefreshToken, VerifyRefreshToken};

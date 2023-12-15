@@ -1,4 +1,6 @@
-const AdminBlogController = require("../../http/controllers/admin/blog/blog.controller");
+const {uploadFile} = require("../../../utils/multer");
+const AdminBlogController = require("../../../http/controllers/admin/blog/blog.controller");
+const {stringToArray} = require("../../../http/middlewares/stringToArray");
 
 const router = require("express").Router();
 
@@ -51,12 +53,18 @@ const router = require("express").Router();
  *   post:
  *     summary: Upload an image
  *     description: Uploads details for a blog category including an image
- *     tags:
- *     - AdminPanel
+ *     tags: [Blog(AdminPanel)]
  *     consumes:
  *     - "multipart/form-data"
  *     produces:
  *     - "application/json"
+ *     parameters:
+ *         - in: header
+ *           name: access-token
+ *           type: string
+ *           required : true
+ *           value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTE1NDE0NDUwMyIsInVzZXJJRCI6IjY1NmRmZTA4MDdhNDE5OTg4MmI3YjRhMiIsImlhdCI6MTcwMjY2NjQ4NCwiZXhwIjoxNzAyNjcwMDg0fQ.sdg9eDqPyIZGrYvyzCsfEpSQ9WgcaDUzcYFoAl28eHU
+ *           example : Bearer token ...
  *     requestBody:
  *       required: true
  *       content:
@@ -91,12 +99,19 @@ const router = require("express").Router();
  *         description: Internal server error
  */
 
-router.post("/add", AdminBlogController.createBlog);
+router.post("/add", uploadFile.single("image"), stringToArray("tags"), AdminBlogController.createBlog);
 
 /**
  * @swagger
  * /admin/blogs:
- *   post:
+ *   get:
+ *     parameters:
+ *         - in: header
+ *           name: access-token
+ *           type: string
+ *           required : true
+ *           value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTE1NDE0NDUwMyIsInVzZXJJRCI6IjY1NmRmZTA4MDdhNDE5OTg4MmI3YjRhMiIsImlhdCI6MTcwMjY2NjQ4NCwiZXhwIjoxNzAyNjcwMDg0fQ.sdg9eDqPyIZGrYvyzCsfEpSQ9WgcaDUzcYFoAl28eHU
+ *           example : Bearer token ...
  *     tags: [Blog(AdminPanel)]
  *     summary: get all blogs
  *     responses:
@@ -105,6 +120,7 @@ router.post("/add", AdminBlogController.createBlog);
  */
 
 router.get("/", AdminBlogController.getListOfBlogs);
+
 module.exports = {
     BlogRouter: router,
 };

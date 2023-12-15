@@ -1,9 +1,7 @@
-const {CategoryRouter} = require("./category");
-const {BlogRouter} = require("./blog");
-const {uploadFile} = require("../../utils/multer");
-const { stringToArray } = require("../../http/middlewares/stringToArray");
+const {CategoryRouter} = require("./category/category");
+const {BlogRouter} = require("./blog/blog");
+const {VerifyAccessToken} = require("./../../http/middlewares/verifyAccessToken");
 const router = require("express").Router();
-
 
 /**
  * @swagger
@@ -18,9 +16,9 @@ const router = require("express").Router();
  *     description: Success
  */
 
-router.use("/category", CategoryRouter);
+router.use("/category", VerifyAccessToken, CategoryRouter);
 
-router.use("/blog",uploadFile.single("image"),stringToArray("tags") , BlogRouter);
+router.use("/blogs", VerifyAccessToken, BlogRouter);
 
 module.exports = {
     adminRoutes: router,
