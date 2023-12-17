@@ -44,7 +44,8 @@ function VerifyRefreshToken(token) {
             const user = await UserModel.findOne({mobile}, {password: 0, token: 0, otp: 0});
             console.log({user});
             if (!user) reject(createError.Unauthorized("حساب کاربری یافت نشد"));
-            const refreshToken = await redisClient.get(user._id);
+            const refreshToken = await redisClient.get(user._id || "key_default");
+            if (!refreshToken) reject(createError.Unauthorized("ورود مجدد به حساب کاربری انجام نشد"));
             if (token === refreshToken) return resolve(mobile);
             reject(createError.Unauthorized("ورود مجدد به حساب کاربری انجام نشد"));
         });

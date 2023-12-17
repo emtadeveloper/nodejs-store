@@ -9,7 +9,7 @@ const CommentSchema = new mongoose.Schema({
 
 const Schema = new mongoose.Schema(
     {
-        author: {type: mongoose.Types.ObjectId, required: true},
+        author: {type: mongoose.Types.ObjectId, required: true, ref: "user"},
         title: {type: String, required: true},
         text: {type: String, required: true},
         short_text: {type: String, required: true},
@@ -26,6 +26,18 @@ const Schema = new mongoose.Schema(
         versionKey: false,
     },
 );
+
+Schema.virtual("user", {
+    ref: "user",
+    localField: "_id",
+    foreignField: "author",
+});
+
+Schema.virtual("category_detail", {
+    ref: "category",
+    localField: "_id",
+    foreignField: "category",
+});
 
 module.exports = {
     BlogModel: mongoose.model("blog", Schema),

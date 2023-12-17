@@ -7,6 +7,16 @@ const {deleteFileInPublic} = require("../../../../utils/function");
 
 class CategoryController extends Controller {
     //
+    async findBlog(query) {
+        const blog = await BlogModel.findOne(query).populate([
+            {path: "category", select: {title: 1}},
+            {path: "author", select: ["mobile", "username", "last_name", "first_name"]},
+        ]);
+        if (!blog) throw createHttpError.NotFound("مقاله ای یاقت نشد");
+        delete blog.category.children;
+        return blog;
+    }
+
     async createBlog(req, res, next) {
         try {
             const blogDataBody = await CreateBlogSchema.validateAsync(req.body);
@@ -79,9 +89,39 @@ class CategoryController extends Controller {
         }
     }
 
-    async getOneBlogById() {}
+    async getOneBlogById(req, res, next) {
+        try {
+            const {id} = req.params;
+            const blog = await this.findBlog({_id: id});
+            return res.status(200).json({
+                data: {
+                    statusCode: 200,
+                    blog,
+                },
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async deleteBlogById(req, res, next) {
+        try {
+            const {id} = req.params;
+            await this.findBlog(id);
+            const result = await BlogModel.deleteOne({_id: id});
+            if (result.deletedCount === 0) throw createHttpError.InternalServerError("حذف انجام شد");
+            return res.status(200).join({
+                data: {
+                    statusCode: 200,
+                    message: "حذف مقاله با موفقیت اتجام شد",
+                },
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+    
     async getCommentsOfBlog() {}
-    async deleteBlogById() {}
     async updateBlogById() {}
 }
 
