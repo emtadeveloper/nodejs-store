@@ -124,6 +124,53 @@ router.get("/", AdminBlogController.getListOfBlogs);
 /**
  * @swagger
  * /admin/blogs/{id}:
+ *   patch:
+ *     summary: update an image
+ *     description: Uploads details for a blog category including an image
+ *     tags: [Blog(AdminPanel)]
+ *     consumes:
+ *     - "multipart/form-data"
+ *     produces:
+ *     - "application/json"
+ *     parameters:
+ *         - in: header
+ *           name: access-token
+ *           type: string
+ *           required : true
+ *           value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTE1NDE0NDUwMyIsInVzZXJJRCI6IjY1NmRmZTA4MDdhNDE5OTg4MmI3YjRhMiIsImlhdCI6MTcwMjY2NjQ4NCwiZXhwIjoxNzAyNjcwMDg0fQ.sdg9eDqPyIZGrYvyzCsfEpSQ9WgcaDUzcYFoAl28eHU
+ *           example : Bearer token ...
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               text:
+ *                 type: string
+ *               short_text:
+ *                 type: string
+ *               tags:
+ *                 type: string
+ *               category:
+ *                 type: string
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       200:
+ *         description: Blog category details uploaded successfully
+ *       500:
+ *         description: Internal server error
+ */
+
+router.patch("/update/:id", uploadFile.single("image"), stringToArray("tags"), AdminBlogController.updateBlogById);
+
+/**
+ * @swagger
+ * /admin/blogs/{id}:
  *   get:
  *     tags: [Blog(AdminPanel)]
  *     summary: get blog by ID and populate this field
