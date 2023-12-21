@@ -68,6 +68,8 @@ module.exports = class Application {
         );
     }
 
+    // components در بالا فقط برای ریکوست بادی ها هستش
+
     createServer(PORT) {
         const http = require("http");
         const server = http.createServer(this.#app);

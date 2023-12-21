@@ -58,13 +58,6 @@ const router = require("express").Router();
  *     - "multipart/form-data"
  *     produces:
  *     - "application/json"
- *     parameters:
- *         - in: header
- *           name: access-token
- *           type: string
- *           required : true
- *           value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTE1NDE0NDUwMyIsInVzZXJJRCI6IjY1NmRmZTA4MDdhNDE5OTg4MmI3YjRhMiIsImlhdCI6MTcwMjY2NjQ4NCwiZXhwIjoxNzAyNjcwMDg0fQ.sdg9eDqPyIZGrYvyzCsfEpSQ9WgcaDUzcYFoAl28eHU
- *           example : Bearer token ...
  *     requestBody:
  *       required: true
  *       content:
@@ -105,13 +98,6 @@ router.post("/add", uploadFile.single("image"), stringToArray("tags"), AdminBlog
  * @swagger
  * /admin/blogs:
  *   get:
- *     parameters:
- *         - in: header
- *           name: access-token
- *           type: string
- *           required : true
- *           value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTE1NDE0NDUwMyIsInVzZXJJRCI6IjY1NmRmZTA4MDdhNDE5OTg4MmI3YjRhMiIsImlhdCI6MTcwMjY2NjQ4NCwiZXhwIjoxNzAyNjcwMDg0fQ.sdg9eDqPyIZGrYvyzCsfEpSQ9WgcaDUzcYFoAl28eHU
- *           example : Bearer token ...
  *     tags: [Blog(AdminPanel)]
  *     summary: get all blogs
  *     responses:
@@ -132,13 +118,6 @@ router.get("/", AdminBlogController.getListOfBlogs);
  *     - "multipart/form-data"
  *     produces:
  *     - "application/json"
- *     parameters:
- *         - in: header
- *           name: access-token
- *           type: string
- *           required : true
- *           value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTE1NDE0NDUwMyIsInVzZXJJRCI6IjY1NmRmZTA4MDdhNDE5OTg4MmI3YjRhMiIsImlhdCI6MTcwMjY2NjQ4NCwiZXhwIjoxNzAyNjcwMDg0fQ.sdg9eDqPyIZGrYvyzCsfEpSQ9WgcaDUzcYFoAl28eHU
- *           example : Bearer token ...
  *     requestBody:
  *       required: true
  *       content:
@@ -175,12 +154,6 @@ router.patch("/update/:id", uploadFile.single("image"), stringToArray("tags"), A
  *     tags: [Blog(AdminPanel)]
  *     summary: get blog by ID and populate this field
  *     parameters:
- *         - in: header
- *           name: access-token
- *           type: string
- *           required : true
- *           value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTE1NDE0NDUwMyIsInVzZXJJRCI6IjY1NmRmZTA4MDdhNDE5OTg4MmI3YjRhMiIsImlhdCI6MTcwMjY2NjQ4NCwiZXhwIjoxNzAyNjcwMDg0fQ.sdg9eDqPyIZGrYvyzCsfEpSQ9WgcaDUzcYFoAl28eHU
- *           example : Bearer token ...
  *         - in: path
  *           name: id
  *           type: string
@@ -199,12 +172,6 @@ router.get("/:id", AdminBlogController.getOneBlogById);
  *     tags: [Blog(AdminPanel)]
  *     summary: delete blog by ID and populate this field
  *     parameters:
- *         - in: header
- *           name: access-token
- *           type: string
- *           required : true
- *           value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTE1NDE0NDUwMyIsInVzZXJJRCI6IjY1NmRmZTA4MDdhNDE5OTg4MmI3YjRhMiIsImlhdCI6MTcwMjY2NjQ4NCwiZXhwIjoxNzAyNjcwMDg0fQ.sdg9eDqPyIZGrYvyzCsfEpSQ9WgcaDUzcYFoAl28eHU
- *           example : Bearer token ...
  *         - in: path
  *           name: id
  *           type: string
