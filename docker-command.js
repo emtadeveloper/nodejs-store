@@ -9,6 +9,8 @@
 //  docker  exec -it redis_local  sh
 //  redis-cli
 
+// دستورات بالا برای ساختن یک ردیس جدید هستش
+
 // بعد هر بار اجرا کردن هم میایم و دستور
-// docker exec -it  redis_local  sh
+// docker exec -it  redis_local  sh  // در داخل ترمینال جدید 
 // redis-server  داخل کامند لینوکس امون میایم و اجراش میکنیم
