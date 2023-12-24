@@ -164,5 +164,5 @@ router.get("/:id", CategoryController.getCategoryById);
 router.patch("/update/:id", CategoryController.editCategoryTitle);
 
 module.exports = {
-    CategoryRouter: router,
+    AdminApiCategoryRouter: router,
 };
