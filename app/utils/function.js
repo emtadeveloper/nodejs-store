@@ -39,6 +39,7 @@ function SignRefreshToken(userId) {
 function VerifyRefreshToken(token) {
     return new Promise((resolve, reject) => {
         JWT.verify(token, REFRESH_TOKEN_SECRET_KET, async (err, payload) => {
+            console.log(err, "err");
             if (err) reject(createError.Unauthorized("وارد حساب کاربری خود شوید"));
             const {mobile} = payload || {};
             const user = await UserModel.findOne({mobile}, {password: 0, token: 0, otp: 0});
@@ -52,9 +53,17 @@ function VerifyRefreshToken(token) {
     });
 }
 
+function ListOfImagesFromRequest(files, fileUploadPath) {
+    if (files?.length > 0) {
+        return files.map(file => path.join(fileUploadPath, file.filename)).map(item => item.replace(/\\/g, "/"));
+    } else {
+        return [];
+    }
+}
+
 function deleteFileInPublic(fileAddress) {
     const pathFile = path.join(__dirname, "..", "..", "public", fileAddress);
     if (fs.existsSync(pathFile)) fs.unlinkSync(pathFile);
 }
 
-module.exports = {deleteFileInPublic, numberRandomGenerator, SignAccessToken, SignRefreshToken, VerifyRefreshToken};
+module.exports = {ListOfImagesFromRequest, deleteFileInPublic, numberRandomGenerator, SignAccessToken, SignRefreshToken, VerifyRefreshToken};

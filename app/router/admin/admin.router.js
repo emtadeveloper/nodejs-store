@@ -6,6 +6,7 @@ const router = require("express").Router();
 
 /** 
  * @swagger
+ * 
  * tags:
  *   - name: AdminPanel
  *     description: Actions an admin can perform (add, remove, edit, etc.)
@@ -15,7 +16,7 @@ const router = require("express").Router();
  *     description: Actions an admin can perform (add, remove, edit, etc.)
  *   - name: Category(AdminPanel)
  *     description: Methods and routes related to the category section within the Admin Panel
- *   - name: UserAuthentication(AdminPanel):
+ *   - name: UserAuthentication(AdminPanel)
  *     description: Actions an admin can perform (add, remove, edit, etc.)
  * 
  * responses:
@@ -23,11 +24,12 @@ const router = require("express").Router();
  *     description: Success
  */
 
+router.use("/product", AdminApiProductRouter);
+
 router.use("/category", VerifyAccessToken, AdminApiCategoryRouter);
 
 router.use("/blogs", VerifyAccessToken, AdminApiBlogRouter);
 
-router.use("/product", VerifyAccessToken, AdminApiProductRouter);
 
 module.exports = {
     adminRoutes: router,

@@ -1,4 +1,6 @@
 const productController = require("../../../http/controllers/admin/product/product.controller");
+const {stringToArray} = require("../../../http/middlewares/stringToArray");
+const {uploadFile} = require("../../../utils/multer");
 
 const router = require("express").Router();
 
@@ -17,7 +19,6 @@ const router = require("express").Router();
  *               - price
  *               - discount
  *               - count
- *               - image
  *             properties:
  *               title:
  *                 type: string
@@ -45,10 +46,33 @@ const router = require("express").Router();
  *               count:
  *                 type: string
  *                 description: the available count of the product
- *               image:
+ *               images:
+ *                 type: array
+ *                 items:
+ *                      type: string
+ *                      format: binary
+ *                 description: the image count of the product
+ *               wight:
  *                 type: string
- *                 format: binary
- *                 description: the image file of the product
+ *                 description:  the wight file of the product packet
+ *               height:
+ *                 type: string
+ *                 description:  the height file of the product packet
+ *               width:
+ *                 type: string
+ *                 description:  the width file of the product packet
+ *               length:
+ *                 type: string
+ *                 description:  the length file of the product packet
+ *               colors:
+ *                 type: array
+ *                 items:
+ *                      type: string
+ *                 description: the image count of the product
+ *               type:
+ *                 type: string
+ *                 enum: [virtual, physical]
+ *                 description: the type of the product, either a virtual or physical item
  */
 
 /**
@@ -75,7 +99,23 @@ const router = require("express").Router();
  *         description: Internal server error
  */
 
-router.post("/", productController.addProduct);
+router.post("/add", uploadFile.array("images", 10), stringToArray("tags", "colors"), productController.addProduct);
+
+/**
+ * @swagger
+ * /admin/product/list:
+ *   get:
+ *     summary: get all products
+ *     description: Endpoint for admin to add a product to the database
+ *     tags: [Product(AdminPanel)]
+ *     responses:
+ *       200:
+ *         description: Product details uploaded successfully
+ *       500:
+ *         description: Internal server error
+ */
+
+router.get("/list", productController.getAllProducts);
 
 module.exports = {
     AdminApiProductRouter: router,

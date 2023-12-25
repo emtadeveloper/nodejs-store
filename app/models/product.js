@@ -1,13 +1,14 @@
 const {default: mongoose} = require("mongoose");
-const { CommentSchema } = require("./public.schema");
+const {CommentSchema} = require("./public.schema");
 
 const Schema = new mongoose.Schema({
     title: {type: String, required: true},
     short_text: {type: String, required: true},
     text: {type: String, required: true},
+    colors: {type: [String], required: true},
     images: {type: [String], required: true},
     tags: {type: [String], default: []},
-    category: {type: mongoose.Types.ObjectId, ref:'category', required: true},
+    category: {type: mongoose.Types.ObjectId, ref: "category", required: true},
     comments: {type: [CommentSchema], required: true},
     likes: {type: [mongoose.Types.ObjectId], default: []},
     deslikes: {type: [mongoose.Types.ObjectId], default: []},
@@ -15,13 +16,13 @@ const Schema = new mongoose.Schema({
     price: {type: Number, default: 0},
     discount: {type: Number, default: 0},
     count: {type: Number},
-    type: {type: String, required: true},   //  مجازی یا فیزکی هستش
+    type: {type: String, required: true}, //  مجازی یا فیزکی هستش
     time: {type: String}, //  اگر ویدویی باشه تایم اشو مشخص میکنیم
-    format: {type: String}, // نوع 
+    format: {type: String}, // نوع
     suplier: {type: mongoose.Types.ObjectId, required: true},
     feature: {
         type: Object,
-        default: {length: "", height: "", width: "", weight: "", colors: [], model: [], madin: ""},
+        default: {length: "", height: "", width: "", wight: ""},
     },
 });
 

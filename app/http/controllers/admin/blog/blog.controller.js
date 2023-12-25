@@ -20,7 +20,6 @@ class CategoryController extends Controller {
     async createBlog(req, res, next) {
         try {
             const blogDataBody = await CreateBlogSchema.validateAsync(req.body);
-            console.log(blogDataBody, "blogDataBody");
             req.body.image = path.join(blogDataBody.fileUploadPath, blogDataBody.filename).replace(/\\/gi, "/");
             req.body.image = req.body.image.replace(/\\/gi, "/");
             const {title, text, short_text, category, tags} = blogDataBody;
@@ -152,7 +151,7 @@ class CategoryController extends Controller {
             next(error);
         }
     }
-    
+
     async getCommentsOfBlog() {}
 }
 

@@ -13,6 +13,7 @@ function VerifyAccessToken(req, res, next) {
     try {
         const token = getToken(req.headers);
         JWT.verify(token, ACCESS_TOKEN_SECRET_KEY, async (err, payload) => {
+            console.log(err,'err')
             if (err) throw createError.Unauthorized("وارد حساب کاربری خود شوید");
             const {mobile} = payload || {};
             const user = await UserModel.findOne({mobile}, {password: 0, token: 0, otp: 0});
