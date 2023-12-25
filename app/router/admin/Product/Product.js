@@ -117,6 +117,58 @@ router.post("/add", uploadFile.array("images", 10), stringToArray("tags", "color
 
 router.get("/list", productController.getAllProducts);
 
+/**
+ * @swagger
+ * /admin/product/{id}:
+ *   get:
+ *     summary: Retrieve a single product
+ *     description: Allows an admin to retrieve detailed information about a specific product by ID.
+ *     tags:
+ *       - Product(AdminPanel)
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The unique identifier of the product
+ *     responses:
+ *       200:
+ *         description: Details of the specified product
+ *       404:
+ *         description: Product not found
+ *       500:
+ *         description: Internal server error
+ */
+
+router.get("/:id", productController.getOneProduct);
+
+/**
+ * @swagger
+ * /admin/product/remove/{id}:
+ *   delete:
+ *     summary: delete  a single product
+ *     description: Allows an admin to retrieve detailed information about a specific product by ID.
+ *     tags:
+ *       - Product(AdminPanel)
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The unique identifier of the product
+ *     responses:
+ *       200:
+ *         description: Details of the specified product
+ *       404:
+ *         description: Product not found
+ *       500:
+ *         description: Internal server error
+ */
+
+router.get("/:id", productController.getOneProduct);
+
 module.exports = {
     AdminApiProductRouter: router,
 };
