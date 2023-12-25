@@ -5,17 +5,9 @@ const router = require("express").Router();
 
 /**
  * @swagger
- * tags:
- *  name: User-Authentication
- *  description : user-auth section
- */
-
-/**
- * @swagger
  *  /user/get-otp:
  *    post:
- *      tags:
- *        - User-Authentication
+ *      tags: [UserAuthentication(AdminPanel)]
  *      summary: Login in user-panel with phone number
  *      description: One time password (OTP) login.
  *      requestBody:
@@ -48,8 +40,7 @@ router.post("/get-otp", UserAuthController.getOtp);
  * @swagger
  *  /user/check-otp:
  *    post:
- *      tags:
- *        - User-Authentication
+ *      tags: [UserAuthentication(AdminPanel)]
  *      summary: Check OTP value in user controller
  *      description: Check OTP with code, mobile, and expires data.
  *      requestBody:
@@ -87,8 +78,7 @@ router.post("/check-otp", UserAuthController.checkOtp);
  * @swagger
  *  /user/refresh-token:
  *    post:
- *      tags:
- *        - User-Authentication
+ *      tags: [UserAuthentication(AdminPanel)]
  *      summary: Send refresh token to get a new access token and refresh token
  *      description: Refresh token
  *      requestBody:
