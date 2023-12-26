@@ -61,7 +61,7 @@ const router = require("express").Router();
  *               discount:
  *                 type: string
  *                 description: the discount on the product
- *               images:
+ *               image:
  *                 type: string
  *                 format: binary
  *                 description: the image count of the product

@@ -1,7 +1,7 @@
 const {CourseModel} = require("../../../../models/course");
 const {StatusCodes: HttpStatus} = require("http-status-codes");
 const Controller = require("../../controller");
-const {path} = require("path");
+const path = require("path");
 const {createCourseSchema} = require("../../../validators/admin/course/course.schema");
 const createHttpError = require("http-errors");
 
@@ -28,6 +28,7 @@ class CourseController extends Controller {
             await createCourseSchema.validateAsync(req.body);
             const {fileUploadPath, filename} = req.body;
             const image = path.join(fileUploadPath, filename).replace(/\\/g, "/");
+            console.log(image, "filename");
             const teacher = req.user._id;
             const {title, short_text, text, type, tags, category, price, discount} = req.body;
             const course = await CourseModel.create({
@@ -50,6 +51,7 @@ class CourseController extends Controller {
                 course: {title, short_text, text, type, tags, category, price, discount, image},
             });
         } catch (error) {
+            console.log(error, "error");
             next(error);
         }
     }

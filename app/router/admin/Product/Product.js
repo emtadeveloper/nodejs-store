@@ -8,7 +8,7 @@ const router = require("express").Router();
  * @swagger
  * components:
  *   schemas:
- *      Types :
+ *      Colors :
  *          type : array
  *          items:
  *              type : string
@@ -84,7 +84,7 @@ const router = require("express").Router();
  *                 type: string
  *                 description:  the length file of the product packet
  *               colors:
- *                   $ref: '#/components/schemas/Types'
+ *                   $ref: '#/components/schemas/Colors'
  *               type:
  *                 type: string
  *                 enum: [virtual, physical]
@@ -137,7 +137,7 @@ const router = require("express").Router();
  *                 type: string
  *                 description:  the length file of the product packet
  *               colors:
- *                   $ref: '#/components/schemas/Types'
+ *                   $ref: '#/components/schemas/Colors'
  *               type:
  *                 type: string
  *                 enum: [virtual, physical]
