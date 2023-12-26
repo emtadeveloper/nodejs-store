@@ -33,7 +33,7 @@ class ProductController extends Controller {
             data.images = ListOfImagesFromRequest(req?.files || [], req?.body.fileUploadPath);
             data.fetures = setFeature(req.body);
             let blackListFields = Object.values(ProductBlackList);
-            deleteInvalidPropertyObject(data, blackListFields);  //  چون رفرنس تایپ هستش میاد و حذف میکنه و نیازی به تغیر دادن ما نیستش
+            deleteInvalidPropertyObject(data, blackListFields); //  چون رفرنس تایپ هستش میاد و حذف میکنه و نیازی به تغیر دادن ما نیستش
             const updateProductResult = await ProductModel.updateOne({id: product._id}, {$set: data});
             if (updateProductResult.modifiedCount === 0) throw {status: HttpStatus.INTERNAL_SERVER_ERROR, message: "خطای داخلی "};
             return res.status(HttpStatus.OK).json({
@@ -73,9 +73,7 @@ class ProductController extends Controller {
     async getOneProduct(req, res, next) {
         try {
             const {id} = req.params;
-            console.log(id);
             const product = await this.findProductById(id);
-            console.log(product);
             if (!product) throw createHttpError.NotFound("محصولی یافت نشد");
             return res.status(HttpStatus.OK).json({
                 data: {

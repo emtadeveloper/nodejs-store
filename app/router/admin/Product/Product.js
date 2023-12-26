@@ -8,6 +8,25 @@ const router = require("express").Router();
  * @swagger
  * components:
  *   schemas:
+ *      Types :
+ *          type : array
+ *          items:
+ *              type : string
+ *              enum :
+ *                  - black
+ *                  - white
+ *                  - gray
+ *                  - red
+ *                  - blue
+ *                  - green
+ *                  - orange
+ *                  - purple
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
  *     Product:
  *             type: object
  *             required:
@@ -65,10 +84,7 @@ const router = require("express").Router();
  *                 type: string
  *                 description:  the length file of the product packet
  *               colors:
- *                 type: array
- *                 items:
- *                      type: string
- *                 description: the image count of the product
+ *                   $ref: '#/components/schemas/Types'
  *               type:
  *                 type: string
  *                 enum: [virtual, physical]
@@ -121,10 +137,7 @@ const router = require("express").Router();
  *                 type: string
  *                 description:  the length file of the product packet
  *               colors:
- *                 type: array
- *                 items:
- *                      type: string
- *                 description: the image count of the product
+ *                   $ref: '#/components/schemas/Types'
  *               type:
  *                 type: string
  *                 enum: [virtual, physical]
