@@ -108,6 +108,11 @@ router.post("/add", uploadFile.array("images", 10), stringToArray("tags", "color
  *     summary: get all products
  *     description: Endpoint for admin to add a product to the database
  *     tags: [Product(AdminPanel)]
+ *     parameters:
+ *          - in : query
+ *            name : search
+ *            type: string
+ *            description: text for search
  *     responses:
  *       200:
  *         description: Product details uploaded successfully

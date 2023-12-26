@@ -26,6 +26,8 @@ const Schema = new mongoose.Schema({
     },
 });
 
+Schema.index({title: "text", short_text: "text", text: "text"}); // بالا بردن سرعت سرچ
+
 module.exports = {
     ProductModel: mongoose.model("product", Schema),
 };

@@ -5,6 +5,7 @@ const {deleteFileInPublic, ListOfImagesFromRequest} = require("../../../../utils
 const {ProductModel} = require("../../../../models/product");
 const {ObjectIdValidator} = require("../../../validators/public.validator");
 const createHttpError = require("http-errors");
+const {StatusCodes: HttpStatus} = require("http-status-codes");
 
 class ProductController extends Controller {
     //
@@ -14,20 +15,19 @@ class ProductController extends Controller {
             const images = ListOfImagesFromRequest(req?.files || [], req?.body.fileUploadPath);
             const {type, title, text, short_text, tags, category, price, discount, count, wight, length, height, width, colors} = productBody;
             const suplier = req.user._id;
-            console.log(productBody.colors);
             let feture = {};
-            // if (isNaN(width) || isNaN(height) || isNaN(length) || isNaN(wight)) {
-            if (!width) feture.width = 0;
-            else feture.width = width;
-            if (!height) feture.height = 0;
-            else feture.height = height;
-            if (!length) feture.length = 0;
-            else feture.length = length;
-            if (!wight) feture.wight = 0;
-            else feture.wight = wight;
-            // }
+            if (isNaN(+width) || isNaN(+height) || isNaN(+length) || isNaN(+wight)) {
+                if (!width) feture.width = 0;
+                else feture.width = +width;
+                if (!height) feture.height = 0;
+                else feture.height = +height;
+                if (!length) feture.length = 0;
+                else feture.length = +length;
+                if (!wight) feture.wight = 0;
+                else feture.wight = +wight;
+            }
             const product = await ProductModel.create({colors, type, title, text, short_text, tags, category, price, discount, count, images, feture, suplier});
-            return res.json({statucCode: 201, message: "ثبت محصول با موفقیت انجام شد"});
+            return res.status(HttpStatus.CREATED).json({statucCode: HttpStatus.CREATED, message: "ثبت محصول با موفقیت انجام شد"});
         } catch (error) {
             const image = path.join(req.body.fileUploadPath, req.body.filename).replace(/\\/g, "/");
             deleteFileInPublic(image);
@@ -37,10 +37,21 @@ class ProductController extends Controller {
 
     async getAllProducts(req, res, next) {
         try {
-            const product = await ProductModel.find({});
-            return res.status(200).json({
+            const search = req?.query?.search || "";
+            let product;
+            if (search) {
+                product = await ProductModel.find({
+                    $text: {
+                        $search: new RegExp(search, "ig"),
+                    },
+                });
+            } else {
+                product = await ProductModel.find({});
+            }
+
+            return res.status(HttpStatus.OK).json({
                 data: {
-                    statusCode: 200,
+                    statusCode: HttpStatus.OK,
                     product,
                 },
             });
@@ -56,9 +67,9 @@ class ProductController extends Controller {
             const product = await this.findProductById(id);
             console.log(product);
             if (!product) throw createHttpError.NotFound("محصولی یافت نشد");
-            return res.status(200).json({
+            return res.status(HttpStatus.OK).json({
                 data: {
-                    statusCode: 200,
+                    statusCode: HttpStatus.OK,
                     product,
                 },
             });
@@ -73,7 +84,7 @@ class ProductController extends Controller {
             const product = await this.findProductById(id);
             const removeProductResult = await ProductController.deleteOne({_id: product._id});
             if (removeProductResult.deleteCount == 0) throw createHttpError.BadRequest("حذف نشد");
-            return res.status(200).json({
+            return res.status(HttpStatus.OK).json({
                 data: {
                     statusCode: 200,
                     product,
