@@ -20,7 +20,7 @@ const Schema = new mongoose.Schema({
     time: {type: String}, //  اگر ویدویی باشه تایم اشو مشخص میکنیم
     format: {type: String}, // نوع
     suplier: {type: mongoose.Types.ObjectId, required: true},
-    feature: {
+    fetures: {
         type: Object,
         default: {length: "", height: "", width: "", wight: ""},
     },

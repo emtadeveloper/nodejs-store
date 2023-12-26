@@ -31,7 +31,7 @@ const Schema = new mongoose.Schema({
     time: {type: String, default: "00.00.00"}, //  اگر ویدویی باشه تایم اشو مشخص میکنیم
     format: {type: String}, // نوع
     teacher: {type: mongoose.Types.ObjectId, ref: "user", required: true},
-    chapter: {type: [Chapter], default: []},
+    chapters: {type: [Chapter], default: []},
     students: {type: [mongoose.Types.ObjectId], default: [], ref: "user"},
 });
 

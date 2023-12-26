@@ -73,6 +73,62 @@ const router = require("express").Router();
  *                 type: string
  *                 enum: [virtual, physical]
  *                 description: the type of the product, either a virtual or physical item
+ *     Edit-Product:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: the title of the product
+ *               short_text:
+ *                 type: string
+ *                 description: the short description of the product
+ *               text:
+ *                 type: string
+ *                 description: the full description of the product
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: the tags assigned to the product
+ *               category:
+ *                 type: string
+ *                 description: the category of the product
+ *               price:
+ *                 type: string
+ *                 description: the price of the product
+ *               discount:
+ *                 type: string
+ *                 description: the discount on the product
+ *               count:
+ *                 type: string
+ *                 description: the available count of the product
+ *               images:
+ *                 type: array
+ *                 items:
+ *                      type: string
+ *                      format: binary
+ *                 description: the image count of the product
+ *               wight:
+ *                 type: string
+ *                 description:  the wight file of the product packet
+ *               height:
+ *                 type: string
+ *                 description:  the height file of the product packet
+ *               width:
+ *                 type: string
+ *                 description:  the width file of the product packet
+ *               length:
+ *                 type: string
+ *                 description:  the length file of the product packet
+ *               colors:
+ *                 type: array
+ *                 items:
+ *                      type: string
+ *                 description: the image count of the product
+ *               type:
+ *                 type: string
+ *                 enum: [virtual, physical]
+ *                 description: the type of the product, either a virtual or physical item
  */
 
 /**
@@ -100,6 +156,32 @@ const router = require("express").Router();
  */
 
 router.post("/add", uploadFile.array("images", 10), stringToArray("tags", "colors"), productController.addProduct);
+
+/**
+ * @swagger
+ * /admin/product/edit/{id}:
+ *   patch:
+ *     summary: Create and save a new product
+ *     description: Endpoint for admin to add a product to the database
+ *     tags: [Product(AdminPanel)]
+ *     consumes:
+ *     - "multipart/form-data"
+ *     produces:
+ *     - "application/json"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *              $ref: '#/components/schemas/Edit-Product'
+ *     responses:
+ *       200:
+ *         description: Product details uploaded successfully
+ *       500:
+ *         description: Internal server error
+ */
+
+router.patch("/edit/:id", uploadFile.array("images", 10), stringToArray("tags", "colors"), productController.editProduct);
 
 /**
  * @swagger

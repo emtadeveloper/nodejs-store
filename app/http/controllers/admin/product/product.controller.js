@@ -1,7 +1,7 @@
 const Controller = require("../../controller");
 const {createProductSchema} = require("../../../validators/admin/product/product.schema");
 const path = require("path");
-const {deleteFileInPublic, ListOfImagesFromRequest} = require("../../../../utils/function");
+const {deleteFileInPublic, ListOfImagesFromRequest, setFeature, copyObjects, ProductBlackList} = require("../../../../utils/function");
 const {ProductModel} = require("../../../../models/product");
 const {ObjectIdValidator} = require("../../../validators/public.validator");
 const createHttpError = require("http-errors");
@@ -13,24 +13,34 @@ class ProductController extends Controller {
         try {
             const productBody = await createProductSchema.validateAsync(req.body);
             const images = ListOfImagesFromRequest(req?.files || [], req?.body.fileUploadPath);
-            const {type, title, text, short_text, tags, category, price, discount, count, wight, length, height, width, colors} = productBody;
+            const {type, title, text, short_text, tags, category, price, discount, count, colors} = productBody;
             const suplier = req.user._id;
-            let feture = {};
-            if (isNaN(+width) || isNaN(+height) || isNaN(+length) || isNaN(+wight)) {
-                if (!width) feture.width = 0;
-                else feture.width = +width;
-                if (!height) feture.height = 0;
-                else feture.height = +height;
-                if (!length) feture.length = 0;
-                else feture.length = +length;
-                if (!wight) feture.wight = 0;
-                else feture.wight = +wight;
-            }
-            const product = await ProductModel.create({colors, type, title, text, short_text, tags, category, price, discount, count, images, feture, suplier});
+            let fetures = setFeature(req.body);
+            const product = await ProductModel.create({colors, type, title, text, short_text, tags, category, price, discount, count, images, fetures, suplier});
             return res.status(HttpStatus.CREATED).json({statucCode: HttpStatus.CREATED, message: "ثبت محصول با موفقیت انجام شد"});
         } catch (error) {
             const image = path.join(req.body.fileUploadPath, req.body.filename).replace(/\\/g, "/");
             deleteFileInPublic(image);
+            next(error);
+        }
+    }
+
+    async editProduct(req, res, next) {
+        try {
+            const {id} = req.params;
+            const product = await this.findProductById(id);
+            const data = copyObjects(req.body);
+            data.images = ListOfImagesFromRequest(req?.files || [], req?.body.fileUploadPath);
+            data.fetures = setFeature(req.body);
+            let blackListFields = Object.values(ProductBlackList);
+            deleteInvalidPropertyObject(data, blackListFields);  //  چون رفرنس تایپ هستش میاد و حذف میکنه و نیازی به تغیر دادن ما نیستش
+            const updateProductResult = await ProductModel.updateOne({id: product._id}, {$set: data});
+            if (updateProductResult.modifiedCount === 0) throw {status: HttpStatus.INTERNAL_SERVER_ERROR, message: "خطای داخلی "};
+            return res.status(HttpStatus.OK).json({
+                statucCode: HttpStatus.OK,
+                message: "به روز رسانی با موفقیت انجام شد",
+            });
+        } catch (error) {
             next(error);
         }
     }

@@ -66,4 +66,62 @@ function deleteFileInPublic(fileAddress) {
     if (fs.existsSync(pathFile)) fs.unlinkSync(pathFile);
 }
 
-module.exports = {ListOfImagesFromRequest, deleteFileInPublic, numberRandomGenerator, SignAccessToken, SignRefreshToken, VerifyRefreshToken};
+function copyObjects(object) {
+    return JSON.parse(JSON.stringify(object));
+}
+
+function setFeature(body) {
+    const {width, height, length, wight, colors} = body;
+    let fetures = {};
+    fetures.colors = colors;
+    if (isNaN(+width) || isNaN(+height) || isNaN(+length) || isNaN(+wight)) {
+        if (!width) fetures.width = 0;
+        else fetures.width = +width;
+        if (!height) fetures.height = 0;
+        else fetures.height = +height;
+        if (!length) fetures.length = 0;
+        else fetures.length = +length;
+        if (!wight) fetures.wight = 0;
+        else fetures.wight = +wight;
+    }
+    return fetures;
+}
+
+const ProductBlackList = {
+    BOOKMARKS: "bookmarks",
+    LIKES: "like",
+    DISLIKES: "dislikes",
+    SUPLIER: "suplier",
+    WIGHT: "wight",
+    WIDTH: "width",
+    LENGTH: "length",
+    HEIGHT: "height",
+    COLORS: "colors",
+};
+
+Object.freeze(ProductBlackList);
+
+function deleteInvalidPropertyObject(data = {}, blackListFields = []) {
+    let nullishData = ["", " ", "0", 0, null, undefined];
+    Object.keys(data).forEach(key => {
+        if (blackListFields.includes(key)) delete data[key];
+        if (typeof data[key] == "string") data[key] = data[key].trim();
+        if (Array.isArray(data[key]) && data[key].length > 0) data[key] = data[key].map(item => item.trim());
+        if (Array.isArray(data[key]) && data[key].length == 0) data[key] = delete data[key];
+        if (nullishData.includes(data[key])) delete data[key];
+    });
+    return data;
+}
+
+module.exports = {
+    deleteInvalidPropertyObject,
+    ProductBlackList,
+    setFeature,
+    copyObjects,
+    ListOfImagesFromRequest,
+    deleteFileInPublic,
+    numberRandomGenerator,
+    SignAccessToken,
+    SignRefreshToken,
+    VerifyRefreshToken,
+};
