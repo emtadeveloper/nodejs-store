@@ -1,8 +1,3 @@
-const {UserAuthController} = require("../../http/controllers/user/auth/auth.controller");
-const {VerifyRefreshToken} = require("../../http/middlewares/verifyAccessToken");
-
-const router = require("express").Router();
-
 /**
  * @swagger
  *  /user/get-otp:
@@ -33,8 +28,6 @@ const router = require("express").Router();
  *        500:
  *          description: Internal Server Error
  */
-
-router.post("/get-otp", UserAuthController.getOtp);
 
 /**
  * @swagger
@@ -72,8 +65,6 @@ router.post("/get-otp", UserAuthController.getOtp);
  *          description: Internal Server Error
  */
 
-router.post("/check-otp", UserAuthController.checkOtp);
-
 /**
  * @swagger
  *  /user/refresh-token:
@@ -104,9 +95,3 @@ router.post("/check-otp", UserAuthController.checkOtp);
  *        500:
  *          description: Internal Server Error
  */
-
-router.post("/refresh-token", UserAuthController.refreshToken);
-
-module.exports = {
-    UserAuthRoutes: router,
-};

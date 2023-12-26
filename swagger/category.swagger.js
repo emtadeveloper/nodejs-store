@@ -1,7 +1,3 @@
-const CategoryController = require("../../../http/controllers/admin/category/category.controller");
-
-const router = require("express").Router();
-
 /**
  * @swagger
  * /admin/category/add:
@@ -27,9 +23,6 @@ const router = require("express").Router();
  *       400:
  *         description: Error in request parameters/body.
  */
-
-router.post("/add", CategoryController.addCategory);
-
 /**
  * @swagger
  * /admin/category/parents:
@@ -42,9 +35,6 @@ router.post("/add", CategoryController.addCategory);
  *       400:
  *         description: Error in request parameters/body.
  */
-
-router.get("/parents", CategoryController.getAllParents);
-
 /**
  * @swagger
  * /admin/category/children/{parent}:
@@ -63,8 +53,6 @@ router.get("/parents", CategoryController.getAllParents);
  *         description: Error in request parameters/body.
  */
 
-router.get("/children/:parent", CategoryController.getChildOfParents);
-
 /**
  * @swagger
  * /admin/category/all:
@@ -75,8 +63,6 @@ router.get("/children/:parent", CategoryController.getChildOfParents);
  *       200:
  *         description: successfully.
  */
-
-router.get("/all", CategoryController.getAllCategory);
 
 /**
  * @swagger
@@ -93,9 +79,6 @@ router.get("/all", CategoryController.getAllCategory);
  *       200:
  *         description: successfully.
  */
-
-router.delete("/remove/:id", CategoryController.removeCategory);
-
 /**
  * @swagger
  * /admin/category/list-of-all:
@@ -106,8 +89,6 @@ router.delete("/remove/:id", CategoryController.removeCategory);
  *       200:
  *         description: successfully.
  */
-
-router.get("/list-of-all", CategoryController.getAllCategoryWithoutPopulate);
 
 /**
  * @swagger
@@ -124,9 +105,6 @@ router.get("/list-of-all", CategoryController.getAllCategoryWithoutPopulate);
  *       200:
  *         description: successfully.
  */
-
-router.get("/:id", CategoryController.getCategoryById);
-
 /**
  * @swagger
  *  /admin/category/update/{id}:
@@ -160,9 +138,3 @@ router.get("/:id", CategoryController.getCategoryById);
  *              500:
  *                  description: Internal server error.
  */
-
-router.patch("/update/:id", CategoryController.editCategoryTitle);
-
-module.exports = {
-    AdminApiCategoryRouter: router,
-};

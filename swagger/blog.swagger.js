@@ -1,52 +1,3 @@
-const {uploadFile} = require("../../../utils/multer");
-const AdminBlogController = require("../../../http/controllers/admin/blog/blog.controller");
-const {stringToArray} = require("../../../http/middlewares/stringToArray");
-
-const router = require("express").Router();
-
-/**
- * @swagger
- * components:
- *   schemas:
- *     BlogCategory:
- *       type: object
- *       required:
- *         - title
- *         - text
- *         - short_text
- *         - tags
- *         - category
- *         - image
- *       properties:
- *         title:
- *           type: string
- *           description: "The title of the blog category"
- *         text:
- *           type: string
- *           description: "The detailed text of the blog category"
- *         short_text:
- *           type: string
- *           description: "A short description of the blog category"
- *         tags:
- *           type: string
- *           description: "Associated tags for the category, separated by #"
- *           example: "tag1#tag2#tag3"
- *         category:
- *           type: string
- *           description: "The ID of the parent category"
- *         image:
- *           type: string
- *           format: binary
- *           description: "Image file for the blog category"
- *       example:
- *         title: "A Guide to Modern Web Development"
- *         text: "Detailed article content here"
- *         short_text: "An overview of modern web development practices"
- *         tags: "webdev#coding#javascript"
- *         category: "5f2b39035a83a33d2f3dfcc5"
- *         image: (binary)
- */
-
 /**
  * @swagger
  * /admin/blogs/add:
@@ -92,8 +43,6 @@ const router = require("express").Router();
  *         description: Internal server error
  */
 
-router.post("/add", uploadFile.single("image"), stringToArray("tags"), AdminBlogController.createBlog);
-
 /**
  * @swagger
  * /admin/blogs:
@@ -104,8 +53,6 @@ router.post("/add", uploadFile.single("image"), stringToArray("tags"), AdminBlog
  *       200:
  *         description: success
  */
-
-router.get("/", AdminBlogController.getListOfBlogs);
 
 /**
  * @swagger
@@ -145,8 +92,6 @@ router.get("/", AdminBlogController.getListOfBlogs);
  *         description: Internal server error
  */
 
-router.patch("/update/:id", uploadFile.single("image"), stringToArray("tags"), AdminBlogController.updateBlogById);
-
 /**
  * @swagger
  * /admin/blogs/{id}:
@@ -162,9 +107,6 @@ router.patch("/update/:id", uploadFile.single("image"), stringToArray("tags"), A
  *       200:
  *         description: success
  */
-
-router.get("/:id", AdminBlogController.getOneBlogById);
-
 /**
  * @swagger
  * /admin/blogs/{id}:
@@ -180,9 +122,3 @@ router.get("/:id", AdminBlogController.getOneBlogById);
  *       200:
  *         description: success
  */
-
-router.delete("/:id", AdminBlogController.deleteBlogById);
-
-module.exports = {
-    AdminApiBlogRouter: router,
-};

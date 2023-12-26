@@ -1,10 +1,10 @@
-const {HomeRoutes} = require("./api");
-const {UserAuthRoutes} = require("./user/auth");
-const {adminRoutes} = require("./admin/admin.router");
-const {AdminApiCourseRouter} = require("./admin/course/course");
+const {HomeRoutes} = require("./api/index.routes");
+const {UserAuthRoutes} = require("./user/auth.routes");
+const {adminRoutes} = require("./admin/admin.routes");
+const {AdminApiCourseRouter} = require("./admin/course/course.routes");
 const router = require("express").Router();
 const redisClient = require("../utils/init_redis");
-const {DeveloperRoutes} = require("./developer.routes");
+const {DeveloperRoutes} = require("./developer/developer.routes");
 const {VerifyAccessToken, checkRole} = require("../http/middlewares/verifyAccessToken");
 
 (async () => {

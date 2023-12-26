@@ -61,7 +61,7 @@ module.exports = class Application {
                         },
                         security: [{BearerAuth: []}],
                     },
-                    apis: ["./app/router/**/*.js"],
+                    apis: ["./swagger/**/*.js"],
                 }),
                 {explorer: true},
             ),

@@ -1,7 +1,3 @@
-const homeController = require("../../http/controllers/api/home.controller");
-const { VerifyAccessToken } = require("../../http/middlewares/verifyAccessToken");
-const router = require("express").Router();
-
 /**
  * @swagger
  * tags:
@@ -25,8 +21,3 @@ const router = require("express").Router();
  *          404:
  *              description: not Found
  */
-
-
-router.get("/", VerifyAccessToken, homeController.indexPage);
-
-module.exports = {HomeRoutes: router};

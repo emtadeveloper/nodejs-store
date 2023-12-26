@@ -7,7 +7,7 @@ const createHttpError = require("http-errors");
 
 class CourseController extends Controller {
     //
-    async getListCourse(req, res, next) {
+    async getListOfCourse(req, res, next) {
         try {
             const {search} = req.query;
             let courses;
@@ -31,6 +31,7 @@ class CourseController extends Controller {
             console.log(image, "filename");
             const teacher = req.user._id;
             const {title, short_text, text, type, tags, category, price, discount} = req.body;
+            if (Number(price) > 0 && type === "free") throw createHttpError.BadRequest("برای دوره رایگان نمی توان قیمت ثبت کرد");
             const course = await CourseModel.create({
                 title,
                 short_text,

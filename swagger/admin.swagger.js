@@ -1,10 +1,3 @@
-const {AdminApiCategoryRouter} = require("./category/category");
-const {AdminApiBlogRouter} = require("./blog/blog");
-const {AdminApiCourseRouter} = require("./course/course");
-const {VerifyAccessToken} = require("./../../http/middlewares/verifyAccessToken");
-const {AdminApiProductRouter} = require("./Product/Product");
-const router = require("express").Router();
-
 /**
  * @swagger
  *
@@ -26,15 +19,3 @@ const router = require("express").Router();
  *   201:
  *     description: Success
  */
-
-router.use("/product", AdminApiProductRouter);
-
-router.use("/category", VerifyAccessToken, AdminApiCategoryRouter);
-
-router.use("/blogs", VerifyAccessToken, AdminApiBlogRouter);
-
-router.use("/courses", VerifyAccessToken, AdminApiCourseRouter);
-
-module.exports = {
-    adminRoutes: router,
-};

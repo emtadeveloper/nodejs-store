@@ -1,9 +1,3 @@
-const productController = require("../../../http/controllers/admin/product/product.controller");
-const {stringToArray} = require("../../../http/middlewares/stringToArray");
-const {uploadFile} = require("../../../utils/multer");
-
-const router = require("express").Router();
-
 /**
  * @swagger
  * components:
@@ -21,6 +15,148 @@ const router = require("express").Router();
  *                  - green
  *                  - orange
  *                  - purple
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Course:
+ *             type: object
+ *             required:
+ *               - title
+ *               - short_text
+ *               - text
+ *               - tags
+ *               - category
+ *               - price
+ *               - discount
+ *               - image
+ *               - type
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: the title of the product
+ *                 example : عنوان دوره
+ *               short_text:
+ *                 type: string
+ *                 description: the short description of the product
+ *                 example : مثال کوتاه شده دوره
+ *               text:
+ *                 type: string
+ *                 description: the full description of the product
+ *                 example : مثال کوتاه شده دوره
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: the tags assigned to the product
+ *               category:
+ *                 type: string
+ *                 description: the category of the product
+ *               price:
+ *                 type: string
+ *                 description: the price of the product
+ *               discount:
+ *                 type: string
+ *                 description: the discount on the product
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *                 description: the image count of the product
+ *               type:
+ *                   $ref: '#/components/schemas/Types'
+ *     Edit-Course:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: the title of the product
+ *                 example : عنوان دوره
+ *               short_text:
+ *                 type: string
+ *                 description: the short description of the product
+ *                 example : مثال کوتاه شده دوره
+ *               text:
+ *                 type: string
+ *                 description: the full description of the product
+ *                 example : مثال کوتاه شده دوره
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: the tags assigned to the product
+ *               category:
+ *                 type: string
+ *                 description: the category of the product
+ *               price:
+ *                 type: string
+ *                 description: the price of the product
+ *               discount:
+ *                 type: string
+ *                 description: the discount on the product
+ *               images:
+ *                 type: string
+ *                 format: binary
+ *                 description: the image count of the product
+ *               type:
+ *                   $ref: '#/components/schemas/Types'
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     BlogCategory:
+ *       type: object
+ *       required:
+ *         - title
+ *         - text
+ *         - short_text
+ *         - tags
+ *         - category
+ *         - image
+ *       properties:
+ *         title:
+ *           type: string
+ *           description: "The title of the blog category"
+ *         text:
+ *           type: string
+ *           description: "The detailed text of the blog category"
+ *         short_text:
+ *           type: string
+ *           description: "A short description of the blog category"
+ *         tags:
+ *           type: string
+ *           description: "Associated tags for the category, separated by #"
+ *           example: "tag1#tag2#tag3"
+ *         category:
+ *           type: string
+ *           description: "The ID of the parent category"
+ *         image:
+ *           type: string
+ *           format: binary
+ *           description: "Image file for the blog category"
+ *       example:
+ *         title: "A Guide to Modern Web Development"
+ *         text: "Detailed article content here"
+ *         short_text: "An overview of modern web development practices"
+ *         tags: "webdev#coding#javascript"
+ *         category: "5f2b39035a83a33d2f3dfcc5"
+ *         image: (binary)
+ */
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *      Types :
+ *          type : array
+ *          items:
+ *              type : string
+ *              enum :
+ *                  - free
+ *                  - cash
+ *                  - spechail
  */
 
 /**
@@ -143,132 +279,3 @@ const router = require("express").Router();
  *                 enum: [virtual, physical]
  *                 description: the type of the product, either a virtual or physical item
  */
-
-/**
- * @swagger
- * /admin/product/add:
- *   post:
- *     summary: Create and save a new product
- *     description: Endpoint for admin to add a product to the database
- *     tags: [Product(AdminPanel)]
- *     consumes:
- *     - "multipart/form-data"
- *     produces:
- *     - "application/json"
- *     requestBody:
- *       required: true
- *       content:
- *         multipart/form-data:
- *           schema:
- *              $ref: '#/components/schemas/Product'
- *     responses:
- *       200:
- *         description: Product details uploaded successfully
- *       500:
- *         description: Internal server error
- */
-
-router.post("/add", uploadFile.array("images", 10), stringToArray("tags", "colors"), productController.addProduct);
-
-/**
- * @swagger
- * /admin/product/edit/{id}:
- *   patch:
- *     summary: Create and save a new product
- *     description: Endpoint for admin to add a product to the database
- *     tags: [Product(AdminPanel)]
- *     consumes:
- *     - "multipart/form-data"
- *     produces:
- *     - "application/json"
- *     requestBody:
- *       required: true
- *       content:
- *         multipart/form-data:
- *           schema:
- *              $ref: '#/components/schemas/Edit-Product'
- *     responses:
- *       200:
- *         description: Product details uploaded successfully
- *       500:
- *         description: Internal server error
- */
-
-router.patch("/edit/:id", uploadFile.array("images", 10), stringToArray("tags", "colors"), productController.editProduct);
-
-/**
- * @swagger
- * /admin/product/list:
- *   get:
- *     summary: get all products
- *     description: Endpoint for admin to add a product to the database
- *     tags: [Product(AdminPanel)]
- *     parameters:
- *          - in : query
- *            name : search
- *            type: string
- *            description: text for search
- *     responses:
- *       200:
- *         description: Product details uploaded successfully
- *       500:
- *         description: Internal server error
- */
-
-router.get("/list", productController.getAllProducts);
-
-/**
- * @swagger
- * /admin/product/{id}:
- *   get:
- *     summary: Retrieve a single product
- *     description: Allows an admin to retrieve detailed information about a specific product by ID.
- *     tags:
- *       - Product(AdminPanel)
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: The unique identifier of the product
- *     responses:
- *       200:
- *         description: Details of the specified product
- *       404:
- *         description: Product not found
- *       500:
- *         description: Internal server error
- */
-
-router.get("/:id", productController.getOneProduct);
-
-/**
- * @swagger
- * /admin/product/remove/{id}:
- *   delete:
- *     summary: delete  a single product
- *     description: Allows an admin to retrieve detailed information about a specific product by ID.
- *     tags:
- *       - Product(AdminPanel)
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: The unique identifier of the product
- *     responses:
- *       200:
- *         description: Details of the specified product
- *       404:
- *         description: Product not found
- *       500:
- *         description: Internal server error
- */
-
-router.get("/:id", productController.getOneProduct);
-
-module.exports = {
-    AdminApiProductRouter: router,
-};
