@@ -35,8 +35,8 @@ class CategoryController extends Controller {
 
             // ارسال پاسخ موفقیت‌آمیز
             return res.status(200).json({
+                statusCode: 200,
                 data: {
-                    statusCode: 200,
                     message: "به‌روزرسانی با موفقیت انجام شد",
                 },
             });
@@ -58,12 +58,11 @@ class CategoryController extends Controller {
 
     async addCategory(req, res, next) {
         try {
-            console.log(req.body, "req.body");
             await addCategorySchema.validateAsync(req.body);
             const {title, parent} = req.body;
             const category = await categoryModel.create({title, parent});
             if (!category) throw createHttpError.InternalServerError("خطای داخلی");
-            return res.status(201).json({data: {statusCode: 201, message: "دسته بندی با موفقیت افزوده شده"}});
+            return res.status(201).json({statusCode: 201, data: {message: "دسته بندی با موفقیت افزوده شده"}});
         } catch (error) {
             next(error);
         }
@@ -125,7 +124,7 @@ class CategoryController extends Controller {
             // ]);
 
             const categories = await categoryModel.find({parent: undefined});
-            return res.status(200).json({statusCode: 200, categories});
+            return res.status(200).json({statusCode: 200, data:categories});
         } catch (error) {
             next(error);
         }
@@ -172,7 +171,7 @@ class CategoryController extends Controller {
                 $or: [{_id: category._id}, {parent: category._id}],
             });
             if (deleteResult.deletedCount === 0) throw createHttpError.InternalServerError("حذف دسته بندی انجام نشد");
-            return res.status(200).json({data: {statusCode: 200, message: "حذف دسته بندی با موفقیت انجام شد"}});
+            return res.status(200).json({statusCode: 200, data: { message: "حذف دسته بندی با موفقیت انجام شد"}});
         } catch (error) {
             next(error);
         }

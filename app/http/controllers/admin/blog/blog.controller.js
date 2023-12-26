@@ -25,16 +25,15 @@ class CategoryController extends Controller {
             const {title, text, short_text, category, tags} = blogDataBody;
             const image = req.body.image;
             const author = req.user._id;
-            const blog = await BlogModel.create({title, text, short_text, category, tags, image, author});
+            await BlogModel.create({title, text, short_text, category, tags, image, author});
             return res.status(201).json({
+                statusCode: 201,
                 data: {
-                    statusCode: 201,
                     message: "ایجاد بلاگ با موفقیت انجام شد",
                 },
             });
         } catch (error) {
             req.body.image = path.join(req.body.fileUploadPath, req.body.filename).replace(/\\/gi, "/");
-            console.log(req.body.image);
             deleteFileInPublic(req.body.image);
             next(error);
         }
@@ -110,8 +109,8 @@ class CategoryController extends Controller {
             const result = await BlogModel.deleteOne({_id: id});
             if (result.deletedCount === 0) throw createHttpError.InternalServerError("حذف انجام شد");
             return res.status(200).join({
+                statusCode: 200,
                 data: {
-                    statusCode: 200,
                     message: "حذف مقاله با موفقیت اتجام شد",
                 },
             });

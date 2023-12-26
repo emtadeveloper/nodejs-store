@@ -4,6 +4,8 @@ const {UserModel} = require("../../../../models/user");
 const {numberRandomGenerator, SignAccessToken, SignRefreshToken, VerifyRefreshToken} = require("../../../../utils/function");
 const {ROLES} = require("../../../../utils/constans");
 const Controller = require("../../controller");
+const {StatusCodes: HttpStatus} = require("http-status-codes");
+
 class UserAuthController extends Controller {
     //
     async getOtp(req, res, next) {
@@ -13,9 +15,9 @@ class UserAuthController extends Controller {
             const code = numberRandomGenerator();
             const result = await this.saveUser(mobile, code);
             if (!result) throw createHttpError.Unauthorized("ورود شما انجام نشد");
-            return res.status(200).send({
+            return res.status(HttpStatus.OK).send({
+                statusCode: HttpStatus.OK,
                 data: {
-                    statusCode: 200,
                     message: "کد اعتبار سنجی با موفقیت برای شما ارسال شد",
                     mobile,
                     code,
@@ -33,7 +35,7 @@ class UserAuthController extends Controller {
             const user = await UserModel.findOne({mobile});
             const accessToken = await SignAccessToken(user._id);
             const newRefreshToken = await SignRefreshToken(user._id);
-            return res.json({data: {accessToken, refreshToken: newRefreshToken}});
+            return res.status(HttpStatus.OK).json({statusCode: HttpStatus.OK, data: {accessToken, refreshToken: newRefreshToken}});
         } catch (error) {
             next(error);
         }
@@ -50,7 +52,7 @@ class UserAuthController extends Controller {
             if (+user.otp.expireIn < now) throw createHttpError.Unauthorized("کد شما منقضی شده است");
             const accessToken = await SignAccessToken(user._id);
             const refreshToken = await SignRefreshToken(user._id);
-            return res.json({data: {accessToken, refreshToken}});
+            return res.status(HttpStatus.OK).json({statusCode: HttpStatus.OK, data: {accessToken, refreshToken}});
         } catch (error) {
             next(error);
         }
@@ -74,7 +76,6 @@ class UserAuthController extends Controller {
         Object.keys(objectData).forEach(key => {
             if (["", " ", 0, null, undefined, "0", NaN].includes(objectData[key])) delete objectData[key];
         });
-        console.log(objectData, "objectData");
         const updateResult = await UserModel.updateOne({mobile}, {$set: objectData});
         return !!updateResult.modifiedCount;
     }

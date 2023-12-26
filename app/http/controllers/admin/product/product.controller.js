@@ -17,7 +17,7 @@ class ProductController extends Controller {
             const suplier = req.user._id;
             let fetures = setFeature(req.body);
             const product = await ProductModel.create({colors, type, title, text, short_text, tags, category, price, discount, count, images, fetures, suplier});
-            return res.status(HttpStatus.CREATED).json({statucCode: HttpStatus.CREATED, message: "ثبت محصول با موفقیت انجام شد"});
+            return res.status(HttpStatus.CREATED).json({statucCode: HttpStatus.CREATED, data: {message: "ثبت محصول با موفقیت انجام شد"}});
         } catch (error) {
             const image = path.join(req.body.fileUploadPath, req.body.filename).replace(/\\/g, "/");
             deleteFileInPublic(image);
@@ -35,10 +35,12 @@ class ProductController extends Controller {
             let blackListFields = Object.values(ProductBlackList);
             deleteInvalidPropertyObject(data, blackListFields); //  چون رفرنس تایپ هستش میاد و حذف میکنه و نیازی به تغیر دادن ما نیستش
             const updateProductResult = await ProductModel.updateOne({id: product._id}, {$set: data});
-            if (updateProductResult.modifiedCount === 0) throw {status: HttpStatus.INTERNAL_SERVER_ERROR, message: "خطای داخلی "};
+            if (updateProductResult.modifiedCount === 0) throw {status: HttpStatus.INTERNAL_SERVER_ERROR, data: {message: "خطای داخلی "}};
             return res.status(HttpStatus.OK).json({
                 statucCode: HttpStatus.OK,
-                message: "به روز رسانی با موفقیت انجام شد",
+                data: {
+                    message: "به روز رسانی با موفقیت انجام شد",
+                },
             });
         } catch (error) {
             next(error);
@@ -60,8 +62,8 @@ class ProductController extends Controller {
             }
 
             return res.status(HttpStatus.OK).json({
+                statusCode: HttpStatus.OK,
                 data: {
-                    statusCode: HttpStatus.OK,
                     product,
                 },
             });
@@ -76,8 +78,8 @@ class ProductController extends Controller {
             const product = await this.findProductById(id);
             if (!product) throw createHttpError.NotFound("محصولی یافت نشد");
             return res.status(HttpStatus.OK).json({
+                statusCode: HttpStatus.OK,
                 data: {
-                    statusCode: HttpStatus.OK,
                     product,
                 },
             });
@@ -93,8 +95,8 @@ class ProductController extends Controller {
             const removeProductResult = await ProductController.deleteOne({_id: product._id});
             if (removeProductResult.deleteCount == 0) throw createHttpError.BadRequest("حذف نشد");
             return res.status(HttpStatus.OK).json({
+                statusCode: 200,
                 data: {
-                    statusCode: 200,
                     product,
                 },
             });

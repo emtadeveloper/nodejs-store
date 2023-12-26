@@ -33,8 +33,12 @@
  *           schema:
  *              $ref: '#/components/schemas/Course'
  *     responses:
- *       200:
+ *       201:
  *         description: Product details uploaded successfully
+ *         content:
+ *            application/json:
+ *                  schema:
+ *                     $ref: '#/definitions/ListOfCourses'
  *       500:
  *         description: Internal server error
  */
@@ -59,6 +63,10 @@
  *     responses:
  *       200:
  *         description: Product details uploaded successfully
+ *         content:
+ *            application/json:
+ *                  schema:
+ *                     $ref: '#/definitions/ListOfCourses'
  *       500:
  *         description: Internal server error
  */

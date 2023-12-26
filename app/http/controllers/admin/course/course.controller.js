@@ -15,7 +15,7 @@ class CourseController extends Controller {
             courses = await CourseModel.find({}).sort({_id: -1}); // میاد و از آخرین رکورد برام میفرسته
             return res.status(HttpStatus.OK).json({
                 stautsCodes: HttpStatus.OK,
-                courses,
+                data: {courses},
             });
         } catch (error) {
             next(error);
@@ -24,11 +24,9 @@ class CourseController extends Controller {
 
     async addCourses(req, res, next) {
         try {
-            console.log("first");
             await createCourseSchema.validateAsync(req.body);
             const {fileUploadPath, filename} = req.body;
             const image = path.join(fileUploadPath, filename).replace(/\\/g, "/");
-            console.log(image, "filename");
             const teacher = req.user._id;
             const {title, short_text, text, type, tags, category, price, discount} = req.body;
             if (Number(price) > 0 && type === "free") throw createHttpError.BadRequest("برای دوره رایگان نمی توان قیمت ثبت کرد");
@@ -49,7 +47,9 @@ class CourseController extends Controller {
             if (!course?._id) throw createHttpError.InternalServerError("دوره ثبت نشد");
             return res.status(HttpStatus.CREATED).json({
                 statusCode: HttpStatus.CREATED,
-                course: {title, short_text, text, type, tags, category, price, discount, image},
+                data: {
+                    course: {title, short_text, text, type, tags, category, price, discount, image},
+                },
             });
         } catch (error) {
             console.log(error, "error");
