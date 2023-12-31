@@ -57,6 +57,10 @@
  *      responses:
  *        200:
  *          description: Success
+ *          content:
+ *            application/json:
+ *                  schema:
+ *                     $ref: '#/definitions/publicDefinitions'
  *        400:
  *          description: Bad Request
  *        401:
