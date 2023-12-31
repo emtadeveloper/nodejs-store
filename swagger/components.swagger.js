@@ -16,12 +16,29 @@
  *                  - orange
  *                  - purple
  */
-
 /**
  * @swagger
  * components:
  *   schemas:
- *     Course:
+ *     AddChapter:
+ *          type: object
+ *          required:
+ *              - id
+ *              - title
+ *          properties:
+ *              id:
+ *                  type: string
+ *                  description: "Unique identifier for the chapter"
+ *                  example: sdf9sd8f09sd077897978sdfsd78
+ *              title:
+ *                  type: string
+ *                  description: "Title of the chapter"
+ *                  example: "Chapter 1: Zero-to-Hero JavaScript"
+ *              text:
+ *                  type: string
+ *                  description: "Detailed description about the chapter"
+ *                  example: "This chapter discusses..."
+ *     Insert-Course:
  *             type: object
  *             required:
  *               - title
@@ -36,34 +53,34 @@
  *             properties:
  *               title:
  *                 type: string
- *                 description: the title of the product
- *                 example : عنوان دوره
+ *                 description: "The title of the course"
+ *                 example: "عنوان دوره"
  *               short_text:
  *                 type: string
- *                 description: the short description of the product
- *                 example : مثال کوتاه شده دوره
+ *                 description: "A brief summary of the course"
+ *                 example: "مثال کوتاه شده دوره"
  *               text:
  *                 type: string
- *                 description: the full description of the product
- *                 example : مثال کوتاه شده دوره
+ *                 description: "The full description of the course content"
+ *                 example: "تفصیل کامل دوره"
  *               tags:
  *                 type: array
  *                 items:
  *                   type: string
- *                 description: the tags assigned to the product
+ *                 description: "Tags for searchability and categorization"
  *               category:
  *                 type: string
- *                 description: the category of the product
+ *                 description: "The category of the course"
  *               price:
  *                 type: string
- *                 description: the price of the product
+ *                 description: "The price of the course"
  *               discount:
  *                 type: string
- *                 description: the discount on the product
+ *                 description: "Any available discount on the course"
  *               image:
  *                 type: string
  *                 format: binary
- *                 description: the image count of the product
+ *                 description: "Cover image of the course"
  *               type:
  *                   $ref: '#/components/schemas/Types'
  *     Edit-Course:
@@ -71,34 +88,34 @@
  *             properties:
  *               title:
  *                 type: string
- *                 description: the title of the product
- *                 example : عنوان دوره
+ *                 description: "The title of the course"
+ *                 example: "عنوان دوره"
  *               short_text:
  *                 type: string
- *                 description: the short description of the product
- *                 example : مثال کوتاه شده دوره
+ *                 description: "A brief summary of the course"
+ *                 example: "مثال کوتاه شده دوره"
  *               text:
  *                 type: string
- *                 description: the full description of the product
- *                 example : مثال کوتاه شده دوره
+ *                 description: "The full description of the course content"
+ *                 example: "تفصیل کامل دوره"
  *               tags:
  *                 type: array
  *                 items:
  *                   type: string
- *                 description: the tags assigned to the product
+ *                 description: "Tags for searchability and categorization"
  *               category:
  *                 type: string
- *                 description: the category of the product
+ *                 description: "The category of the course"
  *               price:
  *                 type: string
- *                 description: the price of the product
+ *                 description: "The price of the course"
  *               discount:
  *                 type: string
- *                 description: the discount on the product
+ *                 description: "Any available discount on the course"
  *               images:
  *                 type: string
  *                 format: binary
- *                 description: the image count of the product
+ *                 description: "Images associated with the course"
  *               type:
  *                   $ref: '#/components/schemas/Types'
  */
