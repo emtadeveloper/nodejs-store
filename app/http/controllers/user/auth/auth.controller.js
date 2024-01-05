@@ -45,6 +45,7 @@ class UserAuthController extends Controller {
         try {
             await chackOtpSchema.validateAsync(req.body);
             const {mobile, code} = req.body;
+            console.log(mobile, code, "mobile, code");
             const user = await UserModel.findOne({mobile});
             if (!user) throw createHttpError.NotFound("کاربر یافت نشد");
             if (user?.otp?.code != code) throw createHttpError.Unauthorized("کد ارسال شده صحیح نمی باشد");
