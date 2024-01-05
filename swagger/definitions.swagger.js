@@ -45,6 +45,29 @@
  *                                  teacher:
  *                                      type: string
  *                                      example: "erfan yousefi"
+ *      ChapterOfCourseDefinition:
+ *          type: object
+ *          properties:
+ *              statusCode:
+ *                  type: integer
+ *                  example: 200
+ *              data:
+ *                  type: object
+ *                  properties:
+ *                      Course:
+ *                          type: object
+ *                          properties:
+ *                            _id:
+ *                               type: string
+ *                               example: "dsfvds535435fgdt4536"
+ *                            title:
+ *                               type: string
+ *                               example: "title of course"
+ *                            chapters:
+ *                               type: array
+ *                               items :
+ *                                    type: object
+ *                               example: [{ _id : 'dsfvds535435fgdt4536' , title : "title of course"  , text : "text of course" }]
  */
 
 /**

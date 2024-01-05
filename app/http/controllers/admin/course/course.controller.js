@@ -12,8 +12,19 @@ class CourseController extends Controller {
         try {
             const {search} = req.query;
             let courses;
-            if (search) courses = await CourseModel.find({$text: {$search: search}}).sort({_id: -1}); // میاد و از آخرین رکورد برام میفرسته
-            courses = await CourseModel.find({}).sort({_id: -1}); // میاد و از آخرین رکورد برام میفرسته
+            if (search)
+                courses = await CourseModel.find({$text: {$search: search}})
+                    .populate([
+                        {path: "category", select: {title: 1}},
+                        {path: "teacher", select: {first_name: 1, last_name: 1, mobile: 1, email: 1}},
+                    ])
+                    .sort({_id: -1}); // میاد و از آخرین رکورد برام میفرسته
+            courses = await CourseModel.find({})
+                .populate([
+                    {path: "category", select: {children: 0, parent: 0}},
+                    {path: "teacher", select: {first_name: 1, last_name: 1, mobile: 1, email: 1}},
+                ])
+                .sort({_id: -1}); // میاد و از آخرین رکورد برام میفرسته
             return res.status(HttpStatus.OK).json({
                 stautsCodes: HttpStatus.OK,
                 data: {courses},
@@ -59,25 +70,6 @@ class CourseController extends Controller {
         }
     }
 
-    async editCourses(req, res, next) {}
-
-    async addChapter(req, res, next) {
-        try {
-            const {id, title, text} = req.body;
-            console.log(id, title, text, "id, title, text", req.body);
-            await this.findCoursById(id);
-            // $push  میتونیم بیایم و داخل یک آبجکت یا آرایه اضافه بکنیم
-            const saveChapterResult = await CourseModel.updateOne({_id: id}, {$push: {chapters: {title, text, episodes: []}}});
-            if (saveChapterResult.modifiedCount === 0) throw createHttpError.InternalServerError("فصل افزوده شد");
-            return res.status(HttpStatus.CREATED).json({
-                statusCode: HttpStatus.CREATED,
-                data: {message: "فصل با موفقیت ایجاد شد"},
-            });
-        } catch (error) {
-            next(error);
-        }
-    }
-
     async findCoursById(id) {
         if (!mongoose.isObjectIdOrHexString(id)) throw createHttpError.BadRequest("شناسه ارسال شده صحیح نمی باشد");
         console.log(id, "id");
@@ -85,6 +77,9 @@ class CourseController extends Controller {
         if (!course) throw createHttpError.NotFound("دوره ای یافت نشد");
         return course;
     }
+
+    async editCourses(req, res, next) {}
 }
 
+// module.exports = {AbstractCourseController: CourseController, CourseController: new CourseController()};
 module.exports = new CourseController();

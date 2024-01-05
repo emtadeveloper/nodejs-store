@@ -27,17 +27,28 @@
  *              - title
  *          properties:
  *              id:
- *                  type: string
- *                  description: "Unique identifier for the chapter"
- *                  example: sdf9sd8f09sd077897978sdfsd78
+ *                type: string
+ *                description: "Unique identifier for the chapter"
+ *                example: sdf9sd8f09sd077897978sdfsd78
  *              title:
- *                  type: string
- *                  description: "Title of the chapter"
- *                  example: "Chapter 1: Zero-to-Hero JavaScript"
+ *                type: string
+ *                description: "Title of the chapter"
+ *                example: "Chapter 1: Zero-to-Hero JavaScript"
  *              text:
- *                  type: string
- *                  description: "Detailed description about the chapter"
- *                  example: "This chapter discusses..."
+ *                type: string
+ *                description: "Detailed description about the chapter"
+ *                example: "This chapter discusses..."
+ *     EditChapter:
+ *          type: object
+ *          properties:
+ *              title:
+ *                type: string
+ *                description: "Title of the chapter"
+ *                example: "Chapter 1: Zero-to-Hero JavaScript"
+ *              text:
+ *                type: string
+ *                description: "Detailed description about the chapter"
+ *                example: "This chapter discusses..."
  *     Insert-Course:
  *             type: object
  *             required:
