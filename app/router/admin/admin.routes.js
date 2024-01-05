@@ -11,7 +11,7 @@ router.use("/category", VerifyAccessToken, AdminApiCategoryRouter);
 
 router.use("/blogs", VerifyAccessToken, AdminApiBlogRouter);
 
-router.use("/courses", VerifyAccessToken, AdminApiCourseRouter);
+router.use("/courses", AdminApiCourseRouter);
 
 module.exports = {
     adminRoutes: router,

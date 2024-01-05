@@ -31,7 +31,7 @@
  *       content:
  *         multipart/form-data:
  *           schema:
- *              $ref: '#/components/schemas/Course'
+ *              $ref: '#/components/schemas/Insert-Course'
  *     responses:
  *       201:
  *         description: Product details uploaded successfully
@@ -90,6 +90,35 @@
  *         description: Details of the specified product
  *       404:
  *         description: Product not found
+ *       500:
+ *         description: Internal server error
+ */
+
+
+/**
+ * @swagger
+ * /admin/courses/add-chapter:
+ *   put:
+ *     summary: Create and save a new product
+ *     description: Endpoint for admin to add a product to the database
+ *     tags: [Course(AdminPanel)]
+ *     consumes:
+ *     - "multipart/form-data"
+ *     produces:
+ *     - "application/json"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *              $ref: '#/components/schemas/AddChapter'
+ *     responses:
+ *       201:
+ *         description: Product details uploaded successfully
+ *         content:
+ *            application/json:
+ *                  schema:
+ *                     $ref: '#/definitions/publicDefinitions'
  *       500:
  *         description: Internal server error
  */
