@@ -10,6 +10,8 @@
  *     description: managment Course section an admin can perform (add, remove, edit, etc.)
  *   - name: Chapter(AdminPanel)
  *     description: managment Course section an admin can perform (add, remove, edit, etc.)
+ *   - name: Episode(AdminPanel)
+ *     description: managment Course section an admin can perform (add, remove, edit, etc.)
  *   - name: Blog(AdminPanel)
  *     description: Actions an admin can perform (add, remove, edit, etc.)
  *   - name: Category(AdminPanel)
