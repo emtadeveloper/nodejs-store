@@ -4,6 +4,8 @@ const createError = require("http-errors");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUI = require("swagger-ui-express");
 const cors = require("cors");
+
+require("dotenv").config();
 module.exports = class Application {
     //
     #express = require("express");

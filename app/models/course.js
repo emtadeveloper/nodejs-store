@@ -4,8 +4,9 @@ const {CommentSchema} = require("./public.schema");
 const Episodes = mongoose.Schema({
     title: {type: String, require: true},
     text: {type: String, require: true},
-    type: {type: String, typ: "unlock"},
+    type: {type: String, default: "unlock"},
     time: {type: String, require: true},
+    videoAddress: {type: String, require: true},
 });
 
 const Chapter = mongoose.Schema({
@@ -19,7 +20,7 @@ const Schema = new mongoose.Schema({
     short_text: {type: String, required: true},
     text: {type: String, required: true},
     image: {type: [String], required: true},
-    status: {type: String, default: "notStarted"}, /** notStarted holding */
+    status: {type: String, default: "notStarted"} /** notStarted holding */,
     tags: {type: [String], default: []},
     category: {type: mongoose.Types.ObjectId, ref: "category", required: true},
     comments: {type: [CommentSchema], required: true},

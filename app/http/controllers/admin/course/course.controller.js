@@ -36,7 +36,6 @@ class CourseController extends Controller {
 
     async addCourses(req, res, next) {
         try {
-            console.log(req.body, "===");
             await createCourseSchema.validateAsync(req.body);
             const {fileUploadPath, filename} = req.body;
             const image = path.join(fileUploadPath, filename).replace(/\\/g, "/");

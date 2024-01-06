@@ -30,7 +30,7 @@ const createEpisedeSchema = Joi.object({
     ChapterID: Joi.string().regex(MongoIDPattern).error(createError.BadRequest("شناسه فصل سحیح نمی باشد")),
     CourseID: Joi.string().regex(MongoIDPattern).error(createError.BadRequest("شناسه دوره سحیح نمی باشد")),
     filename: Joi.string()
-        .pattern(/(\.png|\.jpg|\.webp|\.jpeg|\.gif)$/)
+        .pattern(/(\.mp4|\.mpg|\.mov|\.avi|\.mkv)$/)
         .error(createError.BadRequest("تصویر ارسال شده صحیح نمیباشد")),
     fileUploadPath: Joi.allow(),
 });

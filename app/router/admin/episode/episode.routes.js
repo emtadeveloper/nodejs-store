@@ -1,9 +1,12 @@
 const EpisodeController = require("../../../http/controllers/admin/course/episode.controller");
+const {uploadVideo} = require("../../../utils/multer");
 
 const router = require("express").Router();
 
-router.post("/add",EpisodeController.addNewEpisode)
+console.log("log");
+
+router.post("/add", uploadVideo.single("video"), EpisodeController.addNewEpisode);
 
 module.exports = {
-    EpisodeApiCourseRouter: router,
+    AdminApiEpisodeRouter: router,
 };

@@ -20,43 +20,6 @@
  * @swagger
  * components:
  *   schemas:
- *     AddEpisode:
- *          type: object
- *          required:
- *              - courseID
- *              - chapterID
- *              - title
- *              - text
- *              - time
- *              - video
- *          properties:
- *              courseID:
- *                type: string
- *                description: "Unique identifier for the chapter"
- *                example: sdf9sd8f09sd077897978sdfsd78
- *              chapterID:
- *                type: string
- *                description: "Title of the chapter"
- *                example: "Chapter 1: Zero-to-Hero JavaScript"
- *              title:
- *                type: string
- *                description: "Detailed description about the chapter"
- *                example: "This chapter discusses..."
- *              text:
- *                type: string
- *                description: "Detailed description about the chapter"
- *                example: "This chapter discusses..."
- *              type:
- *                type: string
- *                description: "Detailed description about the chapter"
- *                enum : 
- *                  - unlock
- *                  - lock
- *              video:
- *                type: string
- *                description: "Detailed description about the chapter"
- *                format : binary
-  
  *     AddChapter:
  *          type: object
  *          required:
