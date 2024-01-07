@@ -6,6 +6,7 @@ const {getTime} = require("../../../../utils/function");
 const {StatusCodes: HttpStatus} = require("http-status-codes");
 const {CourseModel} = require("../../../../models/course");
 const createHttpError = require("http-errors");
+const {ObjectIdValidator} = require("../../../validators/public.validator");
 
 class EpisodeController extends Controller {
     async addNewEpisode(req, res, next) {
@@ -32,7 +33,8 @@ class EpisodeController extends Controller {
     }
     async removeEpisode(req, res, next) {
         try {
-            const {id: episodeID} = await ObjectIdValidator.validateAsync({id: req.params.episodeID});
+            const {id: episodeID} = await ObjectIdValidator.validateAsync({id: req.params.id});
+            console.log(episodeID, "id");
             const removeEpisodeResult = await CourseModel.updateOne({"chapters.episodes._id": episodeID}, {$pull: {"chapters.$.episodes": {_id: episodeID}}});
             if (removeEpisodeResult.modifiedCount === 0) throw new createHttpError.InternalServerError("حذف اپیزود انجام نشد");
             return res.status(HttpStatus.OK).json({
