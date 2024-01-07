@@ -10,7 +10,6 @@ const createHttpError = require("http-errors");
 class EpisodeController extends Controller {
     async addNewEpisode(req, res, next) {
         try {
-            console.log(req.body, "body");
             const {title, type, text, ChapterID, CourseID, filename, fileUploadPath} = await createEpisedeSchema.validateAsync(req.body);
             console.log(title, text, ChapterID, CourseID, filename, fileUploadPath);
             const videoAddress = path.join(fileUploadPath, filename).replace(/\\/g, "/");
