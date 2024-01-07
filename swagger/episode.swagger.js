@@ -78,3 +78,23 @@
  *                          schema:
  *                              $ref: '#/definitions/publicDefinition'
  */
+
+/**
+ * @swagger
+ *  /admin/episode/remove/{episodeID}:
+ *      delete:
+ *          tags: [Episode(AdminPanel)]
+ *          summary: create new Chapter for courses
+ *          parameters:
+ *            - in: path
+ *              name: episodeID
+ *              type: string
+ *              required : true
+ *          responses:
+ *              200:
+ *                  description: success
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              $ref: '#/definitions/publicDefinition'
+ */

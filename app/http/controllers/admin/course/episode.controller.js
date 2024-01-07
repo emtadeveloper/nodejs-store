@@ -30,6 +30,21 @@ class EpisodeController extends Controller {
             next(error);
         }
     }
+    async removeEpisode(req, res, next) {
+        try {
+            const {id: episodeID} = await ObjectIdValidator.validateAsync({id: req.params.episodeID});
+            const removeEpisodeResult = await CourseModel.updateOne({"chapters.episodes._id": episodeID}, {$pull: {"chapters.$.episodes": {_id: episodeID}}});
+            if (removeEpisodeResult.modifiedCount === 0) throw new createHttpError.InternalServerError("حذف اپیزود انجام نشد");
+            return res.status(HttpStatus.OK).json({
+                statusCode: HttpStatus.OK,
+                data: {
+                    message: "حذف اپیزود با موفقیت انجام شد",
+                },
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 module.exports = new EpisodeController();
