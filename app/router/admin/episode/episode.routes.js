@@ -6,7 +6,8 @@ const router = require("express").Router();
 console.log("log");
 
 router.post("/add", uploadVideo.single("video"), EpisodeController.addNewEpisode);
-router.delete("/remove/:id", EpisodeController.removeEpisode);
+router.delete("/remove/:episodeID", EpisodeController.removeEpisode);
+router.patch("/update/:episodeID", uploadVideo.single("video"), EpisodeController.updateEpidode);
 
 module.exports = {
     AdminApiEpisodeRouter: router,

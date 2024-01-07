@@ -98,3 +98,29 @@
  *                          schema:
  *                              $ref: '#/definitions/publicDefinition'
  */
+
+/**
+ * @swagger
+ *  /admin/episode/update/{episodeID}:
+ *      patch:
+ *          tags: [Episode(AdminPanel)]
+ *          summary: create new Chapter for courses
+ *          parameters:
+ *            - in: path
+ *              name: episodeID
+ *              type: string
+ *              required : true
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  multipart/form-data:
+ *                      schema:
+ *                          $ref: '#/components/schemas/EditEpisode'
+ *          responses:
+ *              201:
+ *                  description: success - created
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              $ref: '#/definitions/publicDefinition'
+ */
