@@ -6,7 +6,7 @@ const router = require("express").Router();
 
 router.get("/list", CourseController.getListOfCourse);
 router.post("/add", uploadFile.single("image"), stringToArray("tags"), CourseController.addCourses);
-router.patch("/edit", uploadFile.single("image"), stringToArray("tags"), CourseController.editCourses);
+router.patch("/update/:CourseId", uploadFile.single("image"), stringToArray("tags"), CourseController.editCourses);
 router.get("/:id", CourseController.getListOfCourse);
 
 module.exports = {

@@ -5,6 +5,7 @@ const path = require("path");
 const {createCourseSchema} = require("../../../validators/admin/course/course.schema");
 const createHttpError = require("http-errors");
 const {default: mongoose} = require("mongoose");
+const {copyObjects, deleteInvalidPropertyObject, deleteFileInPublic} = require("../../../../utils/function");
 
 class CourseController extends Controller {
     //
@@ -77,8 +78,24 @@ class CourseController extends Controller {
         return course;
     }
 
-    async editCourses(req, res, next) {}
+    async editCourses(req, res, next) {
+        try {
+            const {CourseId} = req.params;
+            const course = await this.findCoursById(CourseId);
+            const data = copyObjects(req.body);
+            const {fileUploadPath, filename} = req.body;
+            let blackListFields = ["items", "chapters", "episodes", "students", "bookmarks", "likes", "dislikes", "comments"];
+            deleteInvalidPropertyObject(data, blackListFields);
+            if (req.file) {
+                data.image = path.join(fileUploadPath, filename);
+                deleteFileInPublic(course.image);
+            }
+            return res.json({data});
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
-// module.exports = {AbstractCourseController: CourseController, CourseController: new CourseController()};
+module.exports = {AbstractCourseController: CourseController, CourseController: new CourseController()};
 module.exports = new CourseController();

@@ -45,7 +45,7 @@
 
 /**
  * @swagger
- * /admin/courses/edit:
+ * /admin/courses/update/{CourseId}:
  *   patch:
  *     summary: Create and save a new product
  *     description: Endpoint for admin to add a product to the database
@@ -54,8 +54,14 @@
  *     - "multipart/form-data"
  *     produces:
  *     - "application/json"
+ *     parameters:
+ *       - in: path
+ *         name: CourseId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: get one course by Id
  *     requestBody:
- *       required: true
  *       content:
  *         multipart/form-data:
  *           schema:
@@ -93,4 +99,3 @@
  *       500:
  *         description: Internal server error
  */
-

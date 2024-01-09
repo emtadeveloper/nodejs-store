@@ -123,7 +123,7 @@
  *               discount:
  *                 type: string
  *                 description: "Any available discount on the course"
- *               images:
+ *               image:
  *                 type: string
  *                 format: binary
  *                 description: "Images associated with the course"
