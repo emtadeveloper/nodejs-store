@@ -28,6 +28,10 @@ const Schema = new mongoose.Schema({
 
 Schema.index({title: "text", short_text: "text", text: "text"}); // بالا بردن سرعت سرچ
 
+Schema.virtual("imageURL").get(function () {
+    return this.images.map(image=>`${process.env.BASE_URL}:${process.env.APPLICATION_PORT}/${image}`)
+});
+
 module.exports = {
     ProductModel: mongoose.model("product", Schema),
 };

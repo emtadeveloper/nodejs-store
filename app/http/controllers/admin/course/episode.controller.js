@@ -2,7 +2,7 @@ const path = require("path");
 const {createEpisedeSchema} = require("../../../validators/admin/course/course.schema");
 const Controller = require("../../controller");
 const {default: getVideoDurationInSeconds} = require("get-video-duration");
-const {getTime, deleteInvalidPropertyObject} = require("../../../../utils/function");
+const {getTime, deleteInvalidPropertyObject, copyObjects} = require("../../../../utils/function");
 const {StatusCodes: HttpStatus} = require("http-status-codes");
 const {CourseModel} = require("../../../../models/course");
 const createHttpError = require("http-errors");
@@ -12,7 +12,7 @@ class EpisodeController extends Controller {
     async addNewEpisode(req, res, next) {
         try {
             const {title, type, text, ChapterID, CourseID, filename, fileUploadPath} = await createEpisedeSchema.validateAsync(req.body);
-            req.bodyvideoAddress = path.join(fileUploadPath, filename).replace(/\\/g, "/");
+            const videoAddress = path.join(fileUploadPath, filename).replace(/\\/g, "/");
             const videoURL = `${process.env.BASE_URL}:${process.env.APPLICATION_PORT}/${videoAddress}`;
             const secound = await getVideoDurationInSeconds(videoURL);
             const time = getTime(secound);
@@ -20,12 +20,7 @@ class EpisodeController extends Controller {
             console.log(episode, CourseID, ChapterID);
             const createEpisodeResult = await CourseModel.updateOne({_id: CourseID, "chapters._id": ChapterID}, {$push: {"chapters.$.episodes": episode}});
             if (createEpisodeResult.modifiedCount === 0) throw new createHttpError.InternalServerError("افزودن اپیزود انجام نشد");
-            return res.status(HttpStatus.CREATED).json({
-                statusCode: HttpStatus.CREATED,
-                data: {
-                    message: "افزودن اپیزود با موفقیت انجام شد",
-                },
-            });
+            return res.status(HttpStatus.CREATED).json({statusCode: HttpStatus.CREATED, data: {message: "افزودن اپیزود با موفقیت انجام شد"}});
         } catch (error) {
             next(error);
         }
@@ -50,44 +45,27 @@ class EpisodeController extends Controller {
                 blackListFields.push("videoAddress");
             }
             const data = req.body;
-            deleteInvalidPropertyInObject(data, blackListFields);
-            const newEpisode = {
-                ...episode,
-                ...data,
-            };
-            const editEpisodeResult = await CourseModel.updateOne(
-                {
-                    "chapters.episodes._id": episodeID,
-                },
-                {
-                    $set: {
-                        "chapters.$.episodes": newEpisode,
-                    },
-                },
-            );
+            deleteInvalidPropertyObject(data, blackListFields);
+            const newEpisode = {...episode, ...data};
+            const editEpisodeResult = await CourseModel.updateOne({"chapters.episodes._id": episodeID}, {$set: {"chapters.$.episodes": newEpisode}});
+            console.log({editEpisodeResult});
             if (!editEpisodeResult.modifiedCount) throw new createHttpError.InternalServerError("ویرایش اپیزود انجام نشد");
-            return res.status(HttpStatus.OK).json({
-                statusCode: HttpStatus.OK,
-                data: {
-                    message: "ویرایش اپیزود با موفقیت انجام شد",
-                },
-            });
+            return res.status(HttpStatus.OK).json({statusCode: HttpStatus.OK, data: {message: "ویرایش اپیزود با موفقیت انجام شد"}});
         } catch (error) {
             next(error);
         }
     }
 
+    // وقتی یک چیزی رو آپدیت میکنیم آیدی اشم میاد و عوض میشه و باید حواسمون باشه آیدی قبلی نداشته باشیم
+
     async getOneEpisode(episodeID) {
-        const course = await CourseModel.findOne(
-            {"chapters.episodes._id": episodeID},
-            {
-                "chapters.$.episodes": 1,
-            },
-        );
+        console.log({episodeID});
+        const course = await CourseModel.findOne({"chapters.episodes._id": episodeID}, {"chapters.$": 1});
         if (!course) throw new createHttpError.NotFound("اپیزودی یافت نشد");
         const episode = await course?.chapters?.[0]?.episodes?.[0];
+        console.log({course});
         if (!episode) throw new createHttpError.NotFound("اپیزودی یافت نشد");
-        return copyObject(episode);
+        return copyObjects(episode);
     }
 
     async removeEpisode(req, res, next) {
@@ -95,10 +73,7 @@ class EpisodeController extends Controller {
             const {id: episodeID} = await ObjectIdValidator.validateAsync({id: req.params.episodeID});
             const removeEpisodeResult = await CourseModel.updateOne({"chapters.episodes._id": episodeID}, {$pull: {"chapters.$.episodes": {_id: episodeID}}});
             if (removeEpisodeResult.modifiedCount === 0) throw new createHttpError.InternalServerError("حذف اپیزود انجام نشد");
-            return res.status(HttpStatus.OK).json({
-                statusCode: HttpStatus.OK,
-                data: {message: "حذف اپیزود با موفقیت انجام شد"},
-            });
+            return res.status(HttpStatus.OK).json({statusCode: HttpStatus.OK, data: {message: "حذف اپیزود با موفقیت انجام شد"}});
         } catch (error) {
             next(error);
         }

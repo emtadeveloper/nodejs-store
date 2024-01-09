@@ -1,12 +1,23 @@
 const {default: mongoose} = require("mongoose");
 const {CommentSchema} = require("./public.schema");
 
-const Episodes = mongoose.Schema({
-    title: {type: String, require: true},
-    text: {type: String, require: true},
-    type: {type: String, default: "unlock"},
-    time: {type: String, require: true},
-    videoAddress: {type: String, require: true},
+const Episodes = mongoose.Schema(
+    {
+        title: {type: String, require: true},
+        text: {type: String, require: true},
+        type: {type: String, default: "unlock"},
+        time: {type: String, require: true},
+        videoAddress: {type: String, require: true},
+    },
+    {
+        toJSON: {
+            virtuals: true,
+        },
+    },
+);
+
+Episodes.virtual("videoURL").get(function () {
+    return `${process.env.BASE_URL}:${process.env.APPLICATION_PORT}/${this.videoAddress}`;
 });
 
 const Chapter = mongoose.Schema({
@@ -38,6 +49,16 @@ const Schema = new mongoose.Schema({
 });
 
 Schema.index({title: "text", short_text: "text", text: "text"});
+
+// virtual  با استفاده از این مقدار ما میتونیم یک فیلد جدید رو ایجاد کنیم و یک مقدار جدید رو داخلش بریزیم
+
+Schema.virtual("imageURL").get(function () {
+    return `${process.env.BASE_URL}:${process.env.APPLICATION_PORT}/${this.image}`;
+});
+
+Schema.virtual("imageURL").get(function () {
+    return `${process.env.BASE_URL}:${process.env.APPLICATION_PORT}/${this.image}`;
+});
 
 module.exports = {
     CourseModel: mongoose.model("course", Schema),
