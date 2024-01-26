@@ -4,11 +4,11 @@
  * tags:
  *   - name: AdminPanel
  *     description: Actions an admin can perform (add, remove, edit, etc.)
+ *   - name: Users(AdminPanel)
+ *     description: managment Course section an admin can perform (add, remove, edit, etc.)
  *   - name: Product(AdminPanel)
  *     description: Actions an admin can perform (add, remove, edit, etc.)
  *   - name: Course(AdminPanel)
- *     description: managment Course section an admin can perform (add, remove, edit, etc.)
- *   - name: User(AdminPanel)
  *     description: managment Course section an admin can perform (add, remove, edit, etc.)
  *   - name: Chapter(AdminPanel)
  *     description: managment Course section an admin can perform (add, remove, edit, etc.)
