@@ -4,9 +4,10 @@ const {uploadFile} = require("../../../utils/multer");
 
 const router = require("express").Router();
 
-router.get("/list", CourseController.getListOfCourse);
+router.get("/list", CourseController.getListOfCourse); //get all course
+router.get("/:id", CourseController.getCourseById); //get all course
 router.post("/add", uploadFile.single("image"), stringToArray("tags"), CourseController.addCourses);
-router.patch("/update/:CourseId", uploadFile.single("image"), stringToArray("tags"), CourseController.editCourses);
+router.patch("/update/:CourseId", uploadFile.single("image"), stringToArray("tags"), CourseController.updateCourseById);
 router.get("/:id", CourseController.getListOfCourse);
 
 module.exports = {

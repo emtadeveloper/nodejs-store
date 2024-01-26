@@ -5,7 +5,7 @@ const path = require("path");
 const {createCourseSchema} = require("../../../validators/admin/course/course.schema");
 const createHttpError = require("http-errors");
 const {default: mongoose} = require("mongoose");
-const {copyObjects, deleteInvalidPropertyObject, deleteFileInPublic} = require("../../../../utils/function");
+const {copyObjects, deleteInvalidPropertyObject, deleteFileInPublic, getTimeOfCourse} = require("../../../../utils/function");
 
 class CourseController extends Controller {
     //
@@ -53,7 +53,6 @@ class CourseController extends Controller {
                 price,
                 discount,
                 image,
-                time: "00:00:00",
                 status: "notStarted",
                 teacher,
             });
@@ -78,7 +77,22 @@ class CourseController extends Controller {
         return course;
     }
 
-    async editCourses(req, res, next) {
+    async getCourseById(req, res, next) {
+        try {
+            const {id} = req.params;
+            const course = await CourseModel.findById(id);
+            course.time = getTimeOfCourse(course.chapters);
+            if (!course) throw createHttpError.NotFound("دوره ای یافت نشد");
+            return res.status(HttpStatus.OK).json({
+                statusCode: HttpStatus.Ok,
+                data: {course},
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async updateCourseById(req, res, next) {
         try {
             const {CourseId} = req.params;
             const course = await this.findCoursById(CourseId);
