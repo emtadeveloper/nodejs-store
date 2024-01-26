@@ -81,11 +81,11 @@ class CourseController extends Controller {
         try {
             const {id} = req.params;
             const course = await CourseModel.findById(id);
-            course.time = getTimeOfCourse(course.chapters);
+            const time = getTimeOfCourse(course.chapters);
             if (!course) throw createHttpError.NotFound("دوره ای یافت نشد");
             return res.status(HttpStatus.OK).json({
                 statusCode: HttpStatus.Ok,
-                data: {course},
+                data: {course, time},
             });
         } catch (error) {
             next(error);

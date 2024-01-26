@@ -17,8 +17,9 @@ class EpisodeController extends Controller {
             const secound = await getVideoDurationInSeconds(videoURL);
             const time = getTime(secound);
             const episode = {title, text, time, type, videoAddress};
-            console.log(episode, CourseID, ChapterID);
+            console.log(CourseID, ChapterID);
             const createEpisodeResult = await CourseModel.updateOne({_id: CourseID, "chapters._id": ChapterID}, {$push: {"chapters.$.episodes": episode}});
+            console.log(createEpisodeResult);
             if (createEpisodeResult.modifiedCount === 0) throw new createHttpError.InternalServerError("افزودن اپیزود انجام نشد");
             return res.status(HttpStatus.CREATED).json({statusCode: HttpStatus.CREATED, data: {message: "افزودن اپیزود با موفقیت انجام شد"}});
         } catch (error) {
