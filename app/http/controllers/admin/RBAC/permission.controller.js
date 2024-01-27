@@ -1,5 +1,6 @@
 const Controller = require("../../controller");
 const {PermissionsModel} = require("../../../../models/permissions");
+const {StatusCodes: HttpStatus} = require("http-status-codes");
 
 class PermissionController extends Controller {
     async getAllPermissions(req, res, next) {
