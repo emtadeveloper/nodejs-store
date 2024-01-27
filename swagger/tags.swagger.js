@@ -6,6 +6,8 @@
  *     description: Actions an admin can perform (add, remove, edit, etc.)
  *   - name: Product(AdminPanel)
  *     description: Actions an admin can perform (add, remove, edit, etc.)
+ *   - name: RBAC(AdminPanel)
+ *     description: Role Base Access Controll System an admin can perform (add, remove, edit, etc.)
  *   - name: Course(AdminPanel)
  *     description: managment Course section an admin can perform (add, remove, edit, etc.)
  *   - name: Chapter(AdminPanel)

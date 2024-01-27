@@ -5,6 +5,8 @@ const {VerifyAccessToken} = require("../../http/middlewares/verifyAccessToken");
 const {AdminApiProductRouter} = require("./Product/Product.routes");
 const {AdminApiChapterRouter} = require("./chapter/chapter.routes");
 const {AdminApiEpisodeRouter} = require("./episode/episode.routes");
+const {AdminApiRoleRouter} = require("./role/role.routes");
+const {AdminApiPermissionRouter} = require("./pemission/pemission.routes");
 
 const router = require("express").Router();
 
@@ -19,6 +21,10 @@ router.use("/courses", AdminApiCourseRouter);
 router.use("/chapter", AdminApiChapterRouter);
 
 router.use("/episode", AdminApiEpisodeRouter);
+
+router.use("/role", AdminApiRoleRouter);
+
+router.use("/permission", AdminApiPermissionRouter);
 
 module.exports = {
     adminRoutes: router,
