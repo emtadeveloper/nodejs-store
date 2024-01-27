@@ -1,5 +1,6 @@
 const {default: mongoose} = require("mongoose");
 const {CommentSchema} = require("./public.schema");
+const {getTimeOfCourse} = require("../utils/function");
 
 const Episodes = mongoose.Schema(
     {
@@ -41,7 +42,6 @@ const Schema = new mongoose.Schema({
     price: {type: Number, default: 0},
     discount: {type: Number, default: 0},
     type: {type: String, default: "free", /** free cash special */ required: true}, //  مجازی یا فیزکی هستش
-    time: {type: String, default: "00.00.00"}, //  اگر ویدویی باشه تایم اشو مشخص میکنیم
     format: {type: String}, // نوع
     teacher: {type: mongoose.Types.ObjectId, ref: "user", required: true},
     chapters: {type: [Chapter], default: []},
@@ -56,8 +56,8 @@ Schema.virtual("imageURL").get(function () {
     return `${process.env.BASE_URL}:${process.env.APPLICATION_PORT}/${this.image}`;
 });
 
-Schema.virtual("imageURL").get(function () {
-    return `${process.env.BASE_URL}:${process.env.APPLICATION_PORT}/${this.image}`;
+Schema.virtual("totalTime").get(function () {
+    return getTimeOfCourse(this.chapters || []);
 });
 
 module.exports = {

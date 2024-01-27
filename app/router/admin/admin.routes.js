@@ -7,6 +7,7 @@ const {AdminApiChapterRouter} = require("./chapter/chapter.routes");
 const {AdminApiEpisodeRouter} = require("./episode/episode.routes");
 const {AdminApiRoleRouter} = require("./role/role.routes");
 const {AdminApiPermissionRouter} = require("./pemission/pemission.routes");
+const {AdminApiUserRouter} = require("./user/user.routes");
 
 const router = require("express").Router();
 
@@ -25,6 +26,7 @@ router.use("/episode", AdminApiEpisodeRouter);
 router.use("/role", AdminApiRoleRouter);
 
 router.use("/permission", AdminApiPermissionRouter);
+router.use("/user", AdminApiUserRouter);
 
 module.exports = {
     adminRoutes: router,

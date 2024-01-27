@@ -4,6 +4,8 @@
  * tags:
  *   - name: AdminPanel
  *     description: Actions an admin can perform (add, remove, edit, etc.)
+ *   - name: Users(AdminPanel)
+ *     description: managment Course section an admin can perform (add, remove, edit, etc.)
  *   - name: Product(AdminPanel)
  *     description: Actions an admin can perform (add, remove, edit, etc.)
  *   - name: RBAC(AdminPanel)
