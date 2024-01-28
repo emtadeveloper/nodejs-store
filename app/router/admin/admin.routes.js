@@ -14,21 +14,21 @@ const router = require("express").Router();
 
 router.use("/product", checkPermission([PERMISSIONS.SUPPLIER, PERMISSIONS.CONTENT_MANAGER]), AdminApiProductRouter);
 
-router.use("/category", checkPermission([PERMISSIONS.CONTENT_MANAGER]), VerifyAccessToken, AdminApiCategoryRouter);
+router.use("/category", checkPermission([PERMISSIONS.CONTENT_MANAGER, PERMISSIONS.CONTENT_MANAGER]), VerifyAccessToken, AdminApiCategoryRouter);
 
-router.use("/blogs", checkPermission([PERMISSIONS.TEACHER]), VerifyAccessToken, AdminApiBlogRouter);
+router.use("/blogs", checkPermission([PERMISSIONS.TEACHER, PERMISSIONS.CONTENT_MANAGER]), VerifyAccessToken, AdminApiBlogRouter);
 
 router.use("/courses", checkPermission([PERMISSIONS.TEACHER]), AdminApiCourseRouter);
 
-router.use("/chapter", checkPermission([PERMISSIONS.TEACHER]), AdminApiChapterRouter);
+router.use("/chapter", checkPermission([PERMISSIONS.TEACHER, PERMISSIONS.CONTENT_MANAGER]), AdminApiChapterRouter);
 
-router.use("/episode", checkPermission([PERMISSIONS.TEACHER]), AdminApiEpisodeRouter);
+router.use("/episode", checkPermission([PERMISSIONS.TEACHER, PERMISSIONS.CONTENT_MANAGER]), AdminApiEpisodeRouter);
 
 router.use("/role", checkPermission([PERMISSIONS.ADMIN]), AdminApiRoleRouter);
 
 router.use("/permission", checkPermission([PERMISSIONS.ADMIN]), AdminApiPermissionRouter);
 
-router.use("/user",checkPermission([PERMISSIONS.ADMIN]), AdminApiUserRouter);
+router.use("/user", checkPermission([PERMISSIONS.ADMIN]), AdminApiUserRouter);
 
 module.exports = {
     adminRoutes: router,

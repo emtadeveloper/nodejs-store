@@ -40,6 +40,23 @@ class UserController extends Controller {
             next(error);
         }
     }
+
+    async UserProfile(req, res, next) {
+        try {
+            const user = req.user;
+            const data = req.body;
+            const BlackListFileds = ["mobile", "otp", "bills", "discount", "Role", "Courses"];
+            deleteInvalidPropertyObject(data, BlackListFileds);
+            const profileUpdateResult = await UserModel.updateOne({_id: userID}, {$set: data});
+            if (!profileUpdateResult.modifiedCount) throw new createHttpError.InternalServerError("به روز رسانی انجام نشد");
+            return res.status(HttpStatus.OK).json({
+                statusCode: HttpStatus.OK,
+                data: {message: "به روز رسانی پروفایل با موفقیت انجام شد"},
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 module.exports = new UserController();
