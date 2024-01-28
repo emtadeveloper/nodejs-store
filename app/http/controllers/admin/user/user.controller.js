@@ -28,7 +28,7 @@ class UserController extends Controller {
         try {
             const userID = req.user._id;
             const data = req.body;
-            const BlackListFileds = ["mobile", "otp", "bills", "discount", "Roles", "Courses"];
+            const BlackListFileds = ["mobile", "otp", "bills", "discount", "Role", "Courses"];
             deleteInvalidPropertyObject(data, BlackListFileds);
             const profileUpdateResult = await UserModel.updateOne({_id: userID}, {$set: data});
             if (!profileUpdateResult.modifiedCount) throw new createHttpError.InternalServerError("به روز رسانی انجام نشد");

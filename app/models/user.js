@@ -12,7 +12,8 @@ const Schema = new mongoose.Schema(
         bills: {type: [], default: []},
         discount: {type: Number, default: 0},
         brithday: {type: String},
-        Roles: {type: [String], default: ["user"]},
+        // Roles: {type: [String], default: ["user"]},
+        Role: {type: String, default: "USER"},
         courses: {type: [mongoose.Types.ObjectId], ref: "course", default: []},
     },
     {
