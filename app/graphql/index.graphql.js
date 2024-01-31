@@ -1,10 +1,15 @@
 const {GraphQLObjectType, GraphQLSchema} = require("graphql");
+const BlogResolver = require("./queries/blog.resolver");
+const {ProductResolver} = require("./queries/product.resolver");
 
 // query , mutation , schema , types
 
 const RootQuery = new GraphQLObjectType({
     name: "RootQuery",
-    fields: {},
+    fields: {
+        blogs: BlogResolver,
+        products: ProductResolver,
+    },
 });
 
 const RootMutation = new GraphQLObjectType({
@@ -14,7 +19,7 @@ const RootMutation = new GraphQLObjectType({
 
 const graphQLSchema = new GraphQLSchema({
     query: RootQuery,
-    mutation: RootMutation,
+    // mutation: RootMutation,
 });
 
 module.exports = {graphQLSchema};

@@ -19,7 +19,7 @@ const Schema = new mongoose.Schema({
     type: {type: String, required: true}, //  مجازی یا فیزکی هستش
     time: {type: String}, //  اگر ویدویی باشه تایم اشو مشخص میکنیم
     format: {type: String}, // نوع
-    suplier: {type: mongoose.Types.ObjectId, required: true},
+    suplier: {type: mongoose.Types.ObjectId, required: true, ref: "user"},
     fetures: {
         type: Object,
         default: {length: "", height: "", width: "", wight: ""},
@@ -29,7 +29,7 @@ const Schema = new mongoose.Schema({
 Schema.index({title: "text", short_text: "text", text: "text"}); // بالا بردن سرعت سرچ
 
 Schema.virtual("imageURL").get(function () {
-    return this.images.map(image=>`${process.env.BASE_URL}:${process.env.APPLICATION_PORT}/${image}`)
+    return this.images.map(image => `${process.env.BASE_URL}:${process.env.APPLICATION_PORT}/${image}`);
 });
 
 module.exports = {
