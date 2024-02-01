@@ -7,7 +7,7 @@ const redisClient = require("../utils/init_redis");
 const {DeveloperRoutes} = require("./developer/developer.routes");
 const {VerifyAccessToken, checkRole} = require("../http/middlewares/verifyAccessToken");
 const {graphqlHTTP} = require("express-graphql");
-const {graphqlConfig} = require("../utils/graphql.config");
+const {graphQLSchema} = require("../graphql/index.graphql");
 
 (async () => {
     await redisClient.set("key", "value");
@@ -30,4 +30,3 @@ router.use("/graphql", graphqlHTTP(graphqlConfig));
 module.exports = {
     AllRoutes: router,
 };
-
