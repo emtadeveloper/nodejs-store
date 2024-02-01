@@ -1,5 +1,5 @@
 const createHttpError = require("http-errors");
-const {PermissionsModel} = require("../../models/permission");
+const {PermissionsModel} = require("../../models/permissions");
 const {RoleModel} = require("../../models/role");
 const {PERMISSIONS} = require("../../utils/constans");
 

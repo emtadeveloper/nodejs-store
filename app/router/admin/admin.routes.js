@@ -9,7 +9,7 @@ const {AdminApiRoleRouter} = require("./role/role.routes");
 const {AdminApiPermissionRouter} = require("./pemission/pemission.routes");
 const {AdminApiUserRouter} = require("./user/user.routes");
 const {PERMISSIONS} = require("./../../utils/constans");
-
+const { checkPermission } = require("../../http/middlewares/Permission.guard");
 const router = require("express").Router();
 
 router.use("/product", checkPermission([PERMISSIONS.SUPPLIER, PERMISSIONS.CONTENT_MANAGER]), AdminApiProductRouter);

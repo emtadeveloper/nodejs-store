@@ -4,7 +4,16 @@ const {GraphQLObjectType, GraphQLSchema} = require("graphql");
 
 const RootQuery = new GraphQLObjectType({
     name: "RootQuery",
-    fields: {},
+    fields: {
+        blogs : {
+            type : new GraphQLObjectType({
+                name :'blogsType' ,
+                fields : {
+                    id : { type :Gr}
+                }
+            })
+        }
+    },
 });
 
 const RootMutation = new GraphQLObjectType({
