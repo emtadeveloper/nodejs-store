@@ -8,6 +8,7 @@ const {DeveloperRoutes} = require("./developer/developer.routes");
 const {VerifyAccessToken, checkRole} = require("../http/middlewares/verifyAccessToken");
 const {graphqlHTTP} = require("express-graphql");
 const {graphQLSchema} = require("../graphql/index.graphql");
+const {graphqlConfig} = require("../utils/graphql.config");
 
 (async () => {
     await redisClient.set("key", "value");

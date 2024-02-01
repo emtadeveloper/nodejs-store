@@ -1,3 +1,4 @@
+const { GraphQLList } = require("graphql");
 const {BlogModel} = require("../../models/blogs");
 const {BlogsType} = require("../typeDefs/blog.type");
 

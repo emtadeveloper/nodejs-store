@@ -1,5 +1,6 @@
 const {ProductModel} = require("../../models/product");
-const {BlogsType} = require("../typeDefs/blog.type");
+const {GraphQLList} = require("graphql");
+const {ProductType} = require("../typeDefs/product.type");
 
 const ProductResolver = {
     type: new GraphQLList(ProductType),

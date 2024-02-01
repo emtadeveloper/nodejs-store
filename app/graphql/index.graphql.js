@@ -10,7 +10,7 @@ const RootQuery = new GraphQLObjectType({
     fields: {
         blogs: BlogResolver,
         products: ProductResolver,
-        categories: CategoriesResolver,
+        // categories: CategoriesResolver,
     },
 });
 
