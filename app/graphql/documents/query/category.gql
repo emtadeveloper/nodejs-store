@@ -1,5 +1,12 @@
 {
-    categories {
+    categories(auhorizationToken: "6571f51cd48493fa6382720c" , field="6571f51cd48493fa6382720c") {
+        _id
+        title
+    }
+}
+
+{
+    childOfCategories(parent: "6571f51cd48493fa6382720c") {
         _id
         title
     }

@@ -1,5 +1,5 @@
 const {GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt} = require("graphql");
-const {AuthorType, CategoryType} = require("./public.type");
+const {AuthorType, PublicCategoryType} = require("./public.type");
 
 const FeaturesType = new GraphQLObjectType({
     name: "features",
@@ -23,7 +23,7 @@ const ProductType = new GraphQLObjectType({
         images: {type: new GraphQLList(GraphQLString)},
         imagesURL: {type: new GraphQLList(GraphQLString)},
         tags: {type: new GraphQLList(GraphQLString)},
-        category: {type: CategoryType},
+        category: {type: PublicCategoryType},
         price: {type: GraphQLInt},
         discount: {type: GraphQLInt},
         count: {type: GraphQLInt},

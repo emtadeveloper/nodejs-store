@@ -5,12 +5,11 @@ const {CategoryType} = require("../typeDefs/category");
 const CategoriesResolver = {
     type: new GraphQLList(CategoryType),
     args: {
-        field: {types: GraphQLString},
-        auhorizationToken: {types: GraphQLString},
+        field: {type: GraphQLString},
+        auhorizationToken: {type: GraphQLString},
     },
     resolve: async (object, args, context, info) => {
         console.log(args);
-        console.log(context);
         const Categories = await categoryModel.find({parent: undefined});
         return Categories;
     },
@@ -19,7 +18,7 @@ const CategoriesResolver = {
 const CategoryChildResolver = {
     type: new GraphQLList(CategoryType),
     args: {
-        parent: {types: GraphQLString},
+        parent: {type: GraphQLString},
     },
     resolve: async (object, args, context, info) => {
         const {parent} = args;
@@ -28,4 +27,4 @@ const CategoryChildResolver = {
     },
 };
 
-module.exports = {CategoryChildResolver, CategoriesResolver};
+module.exports = {CategoriesResolver, CategoryChildResolver};
