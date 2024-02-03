@@ -1,4 +1,4 @@
-const {GraphQLList} = require("graphql");
+const {GraphQLList, GraphQLString} = require("graphql");
 const {BlogModel} = require("../../models/blogs");
 const {BlogsType} = require("../typeDefs/blog.type");
 const {VerifyAccessTokenInGraphQL} = require("../middlewares/auhorization");
@@ -8,11 +8,16 @@ const {VerifyAccessTokenInGraphQL} = require("../middlewares/auhorization");
 
 const BlogResolver = {
     type: new GraphQLList(BlogsType),
+    args: {category: {type: GraphQLString}},
     resolve: async (_, args, context) => {
         const {req, res} = context;
+        const {category} = args;
+        const findQuery = category ? {category} : {};
         req.user = await VerifyAccessTokenInGraphQL(req);
-        return await BlogModel.find({}).populate([{path: "author"}, {path: "category"}]);
+        return await BlogModel.find(findQuery).populate([{path: "author"}, {path: "category"}]);
     },
 };
 
 module.exports = BlogResolver;
+
+

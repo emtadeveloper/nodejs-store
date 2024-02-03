@@ -14,3 +14,53 @@
         }
     }
 }
+
+# // alias  یا اسم مستعار برای  کوئری  هامون که میایم و می نویسیم
+# myData بالا رو دارد alias در پایین همون
+
+# {
+#    myData  blogs {
+#         _id
+#         title
+#         imageURL
+#         short_text
+#         author {
+#             first_name
+#             last_name
+#         }
+#         category {
+#             title
+#             _id
+#         }
+#     }
+# }
+
+# {
+#   myData blogs(category="42342354dffdfg"){
+#     ...blogFields
+#   }
+# }
+
+# fragment blogFields on blogType {
+#           _id
+#         title
+#         imageURL
+#         short_text
+#         author {
+#             first_name
+#             last_name
+#         }
+#         category {
+#             title
+#             _id
+#         }
+#     }
+# }
+
+# ایجاد متغیر
+
+query getBlogs($category: string) {
+    myData: blogs(category: $category) {
+        ...blogFields
+    }
+}
