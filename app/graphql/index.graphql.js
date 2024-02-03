@@ -11,7 +11,8 @@ const RootQuery = new GraphQLObjectType({
         blogs: BlogResolver,
         products: ProductResolver,
         categories: CategoriesResolver,
-        childOfCategories:CategoryChildResolver
+        childOfCategories: CategoryChildResolver,
+        courses: CourseResolver,
     },
 });
 

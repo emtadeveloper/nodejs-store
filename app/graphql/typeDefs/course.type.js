@@ -22,6 +22,8 @@ const EpisodeType = new GraphQLObjectType({
         type: {type: GraphQLString},
         time: {type: GraphQLString},
         videoAdress: {type: GraphQLString},
+        videoURL: {type: GraphQLString},
+    },
 });
 
 const ChapterType = new GraphQLObjectType({
@@ -29,7 +31,7 @@ const ChapterType = new GraphQLObjectType({
     fields: {
         _id: {type: GraphQLString},
         text: {type: GraphQLString},
-        title: {type: GraphQLString},  
+        title: {type: GraphQLString},
         episodes: {type: new GraphQLList(EpisodeType)},
     },
 });
@@ -41,8 +43,8 @@ const CourseType = new GraphQLObjectType({
         title: {type: GraphQLString},
         short_text: {type: GraphQLString},
         text: {type: GraphQLString},
-        images: {type: new GraphQLList(GraphQLString)},
-        imagesURL: {type: new GraphQLList(GraphQLString)},
+        image: {type: GraphQLString},
+        imageURL: {type: GraphQLString},
         tags: {type: new GraphQLList(GraphQLString)},
         category: {type: PublicCategoryType},
         price: {type: GraphQLInt},
@@ -52,7 +54,8 @@ const CourseType = new GraphQLObjectType({
         supplier: {type: AuthorType},
         features: {type: FeaturesType},
         status: {type: GraphQLString},
-        teacher: {type: AuthorType, ref: "user", required: true},
+        teacher: {type: AuthorType},
+        chapters: {type: new GraphQLList(ChapterType)},
     },
 });
 
