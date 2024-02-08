@@ -19,4 +19,4 @@ const CourseResolver = {
     },
 };
 
-module.exports = CourseResolver;
+module.exports = {CourseResolver};

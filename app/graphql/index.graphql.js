@@ -1,6 +1,7 @@
 const {GraphQLObjectType, GraphQLSchema} = require("graphql");
 const BlogResolver = require("./queries/blog.resolver");
 const {ProductResolver} = require("./queries/product.resolver");
+const {CourseResolver} = require("./queries/course.resolver");
 const {CategoriesResolver, CategoryChildResolver} = require("./queries/category.resolver");
 
 // query , mutation , schema , types

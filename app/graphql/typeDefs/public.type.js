@@ -1,6 +1,19 @@
 const {GraphQLString, GraphQLObjectType, GraphQLScalarType, GraphQLList} = require("graphql");
 const {toObject, parseLiteral} = require("../utils");
 
+const FeaturesType = new GraphQLObjectType({
+    name: "features",
+    fields: {
+        length: {type: GraphQLString},
+        height: {type: GraphQLString},
+        width: {type: GraphQLString},
+        wight: {type: GraphQLString},
+        colors: {type: new GraphQLList(GraphQLString)},
+        madein: {type: GraphQLString},
+    },
+});
+
+
 const AnyType = new GraphQLScalarType({
     name: "anyType",
     parseValue: toObject,
@@ -34,4 +47,4 @@ const CategoryType = new GraphQLObjectType({
     },
 });
 
-module.exports = {CategoryType, PublicCategoryType, AuthorType, AnyType};
+module.exports = {CategoryType, PublicCategoryType, AuthorType, AnyType,FeaturesType};
